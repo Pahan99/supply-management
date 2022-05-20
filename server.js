@@ -1,16 +1,18 @@
 const { app } = require("./app");
-const { connPool } = require("./database/dbConnect");
+const { dbConn } = require("./database/db-config");
 
 require("dotenv").config();
 
-connPool.getConnection(function (err, conn) {
-  if (err) {
-    console.log(err.message);
-    return;
-  }
-  console.log("Database connected");
-  const PORT = process.env.PORT || 3001;
-  app.listen(PORT, () => {
-    console.log(`Listening on port : ${PORT}`);
+const PORT = process.env.PORT || 3001;
+
+dbConn
+  .connectionCheck()
+  .then((data) => {
+    console.log(data);
+    app.listen(PORT, () => {
+      console.log(`Listening on port : ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
   });
-});
