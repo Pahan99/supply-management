@@ -2,13 +2,16 @@
   <head>
     <%- include('../components/header.ejs',{title:'Manager Dashboard '})%>
   </head>
-  <body class="g-sidenav-show bg-gray-100">
+  <body class="g-sidenav-show bg-gray-300">
+    <div
+      class="min-height-300 bg-gradient-primary position-absolute fixed-top w-100"
+      style="z-index: -1"
+    ></div>
     <%- include('../components/navbar.ejs') %>
 
     <div class="container-fluid col-10">
-      
-      <div class="row mt-4 px-5 trip">
-        <nav>
+      <div class="row mt-4 px-5 trip bg-gray-100 border-radius-lg">
+        <nav class="">
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button
               class="nav-link active"
@@ -59,14 +62,23 @@
               <div class="my-3 px-3 d-grid accordion" id="trip">
                 <div class="row accordion-item">
                   <div class="accordion-body col-md-7 col-10">
-                    <h5 class="title route">Kandy - Colombo</h5>
-                    <p class="body-text capacity">Capacity: 90/100kg</p>
-                    <p class="body-text date">Date: 22/02/2022</p>
-                    <p class="body-text journey-start">
-                      Journey Start: Kandy 10.00 a.m
+                    <h5 class="title route text-dark">
+                      <i class="fa fa-train"></i>&nbsp; Kandy - Colombo
+                    </h5>
+                    <hr />
+                    <p class="text-sm capacity">
+                      <i class="fa fa-weight"></i>&nbsp;&nbsp;Capacity: 90/100kg
                     </p>
-                    <p class="body-text journey-end">
-                      Journey End: Colombo 6.00 p.m
+                    <p class="text-sm date">
+                      <i class="fa fa-calendar"></i>&nbsp;&nbsp;Date: 22/02/2022
+                    </p>
+                    <p class="text-sm journey-start">
+                      <i class="fa fa-hourglass-start"></i>&nbsp;&nbsp;Journey
+                      Start: Kandy 10.00 a.m
+                    </p>
+                    <p class="text-sm journey-end">
+                      <i class="fa fa-hourglass-end"></i>&nbsp;&nbsp;Journey
+                      End: Colombo 6.00 p.m
                     </p>
                   </div>
                   <div
@@ -256,14 +268,23 @@
               <div class="my-3 px-3 d-grid accordion" id="trip">
                 <div class="row accordion-item">
                   <div class="accordion-body col-md-7 col-10">
-                    <h5 class="title route">Kandy - Colombo</h5>
-                    <p class="body-text capacity">Capacity: 90/100kg</p>
-                    <p class="body-text date">Date: 22/02/2022</p>
-                    <p class="body-text journey-start">
-                      Journey Start: Kandy 10.00 a.m
+                    <h5 class="title route text-dark">
+                      <i class="fa fa-train"></i>&nbsp; Kandy - Colombo
+                    </h5>
+                    <hr />
+                    <p class="text-sm capacity">
+                      <i class="fa fa-weight"></i>&nbsp;&nbsp;Capacity: 90/100kg
                     </p>
-                    <p class="body-text journey-end">
-                      Journey End: Colombo 6.00 p.m
+                    <p class="text-sm date">
+                      <i class="fa fa-calendar"></i>&nbsp;&nbsp;Date: 22/02/2022
+                    </p>
+                    <p class="text-sm journey-start">
+                      <i class="fa fa-hourglass-start"></i>&nbsp;&nbsp;Journey
+                      Start: Kandy 10.00 a.m
+                    </p>
+                    <p class="text-sm journey-end">
+                      <i class="fa fa-hourglass-end"></i>&nbsp;&nbsp;Journey
+                      End: Colombo 6.00 p.m
                     </p>
                   </div>
                   <div
@@ -449,10 +470,22 @@
               <div class="my-3 px-3 d-grid accordion" id="trip">
                 <div class="row accordion-item">
                   <div class="accordion-body col-md-7 col-10">
-                    <h5 class="title route">Route ID #0098 Colombo-Panadura</h5>
-                    <p class="body-text truck">Truck ID: #006</p>
-                    <p class="body-text truck-number">Truck No: LM2639</p>
-                    <p class="body-text num-orders">Number of orders: 33</p>
+                    <h5 class="title route">
+                      <i class="fa fa-road"></i>&nbsp;&nbsp;Route ID #0098
+                      Colombo-Panadura
+                    </h5>
+                    <hr />
+                    <p class="body-text truck">
+                      <i class="fa fa-truck"></i>&nbsp;&nbsp;Truck ID: #006
+                    </p>
+                    <p class="body-text truck-number">
+                      <i class="fa fa-id-card"></i>&nbsp;&nbsp;Truck No: LM2639
+                    </p>
+                    <p class="body-text num-orders">
+                      <i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Number of
+                      orders: 33
+                    </p>
+                    <hr />
                     <select
                       class="form-select driver-select my-2"
                       aria-label="driver-select"
@@ -482,7 +515,7 @@
                     <!-- change the data-bs-target to the relevent id -->
                     <button
                       type="button"
-                      class="btn btn-outline-dark m-2 collapsed"
+                      class="btn btn-dark m-2 collapsed"
                       data-bs-toggle="collapse"
                       data-bs-target="#schedule-orders-1"
                       aria-expanded="false"
@@ -490,7 +523,7 @@
                     >
                       View Orders
                     </button>
-                    <a href="#" class="btn btn-outline-danger m-2">Confirm</a>
+                    <a href="#" class="btn btn-danger m-2">Confirm</a>
                   </div>
                   <!-- change below id in each item -->
                   <div
@@ -505,120 +538,36 @@
                       >
                         <thead>
                           <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Dispatch Location</th>
-                            <th scope="col">Related Store</th>
-                            <th scope="col">Order Date</th>
-                            <th scope="col">Weight</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="my-3 px-3 d-grid accordion" id="trip">
-                <div class="row accordion-item">
-                  <div class="accordion-body col-md-7 col-10">
-                    <h5 class="title route">Route ID #0098 Colombo-Panadura</h5>
-                    <p class="body-text truck">Truck ID: #006</p>
-                    <p class="body-text truck-number">Truck No: LM2639</p>
-                    <p class="body-text num-orders">Number of orders: 33</p>
-                    <select
-                      class="form-select driver-select my-2"
-                      aria-label="driver-select"
-                    >
-                      <option selected>Select Driver</option>
-                      <option value="1">Akash</option>
-                      <option value="2">Pahan</option>
-                      <option value="3">Nipun</option>
-                      <option value="4">Sahan</option>
-                      <option value="5">Saduni</option>
-                    </select>
-                    <select
-                      class="form-select assistant-select my-2"
-                      aria-label="assistant-select"
-                    >
-                      <option selected>Select Assistant</option>
-                      <option value="1">Akash</option>
-                      <option value="2">Pahan</option>
-                      <option value="3">Nipun</option>
-                      <option value="4">Sahan</option>
-                      <option value="5">Saduni</option>
-                    </select>
-                  </div>
-                  <div
-                    class="buttons col-md-5 col-10 d-flex align-items-end justify-content-end"
-                  >
-                    <!-- change the data-bs-target to the relevent id -->
-                    <button
-                      type="button"
-                      class="btn btn-outline-dark m-2 collapsed"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#schedule-orders-2"
-                      aria-expanded="false"
-                      aria-controls="products"
-                    >
-                      View Orders
-                    </button>
-                    <a href="#" class="btn btn-outline-danger m-2">Confirm</a>
-                  </div>
-                  <!-- change below id in each item -->
-                  <div
-                    id="schedule-orders-2"
-                    class="accordion-collapse collapse"
-                    aria-labelledby="products-details"
-                    data-bs-parent="#trip"
-                  >
-                    <div class="accordion-body">
-                      <table
-                        class="table table-striped table-hover products-details"
-                      >
-                        <thead>
-                          <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Dispatch Location</th>
-                            <th scope="col">Related Store</th>
-                            <th scope="col">Order Date</th>
-                            <th scope="col">Weight</th>
+                            <th
+                              scope="col"
+                              class="text-uppercase text-secondary text-sm font-weight-bolder opacity-100"
+                            >
+                              Date
+                            </th>
+                            <th
+                              scope="col"
+                              class="text-uppercase text-secondary text-sm font-weight-bolder opacity-100"
+                            >
+                              Dispatch Location
+                            </th>
+                            <th
+                              scope="col"
+                              class="text-uppercase text-secondary text-sm font-weight-bolder opacity-100"
+                            >
+                              Related Store
+                            </th>
+                            <th
+                              scope="col"
+                              class="text-uppercase text-secondary text-sm font-weight-bolder opacity-100"
+                            >
+                              Order Date
+                            </th>
+                            <th
+                              scope="col"
+                              class="text-uppercase text-secondary text-sm font-weight-bolder opacity-100"
+                            >
+                              Weight
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
