@@ -4,20 +4,17 @@ drivers = [
   {
     user_id: 1,
     availability: "TRUE",
-    worked_hours: 10,
-    last_delivery_id: 1,
+    worked_hours: 10
   },
   {
     user_id: 2,
     availability: "FALSE",
-    worked_hours: 10,
-    last_delivery_id: 3,
+    worked_hours: 10
   },
   {
     user_id: 1,
     availability: "TRUE",
-    worked_hours: 10,
-    last_delivery_id: 2,
+    worked_hours: 10
   },
 ];
 
