@@ -1,6 +1,6 @@
 const { db } = require("../database/db-config");
 
-trucks = [
+routes = [
     {
         route_name: "Colombo - Moratuwa"
     },
@@ -19,8 +19,8 @@ trucks = [
 ]
 
 routes.forEach((route) => {
-    sql = "INSERT INTO route (route_name, capacity) VALUES (?,?)";
-    db.query(sql, [truck.route_name], function (err, result) {
+    sql = "INSERT INTO routes (route_name) VALUES (?)";
+    db.query(sql, [route.route_name], function (err, result) {
         if (err) throw err;
         console.log(result);
         process.exit();

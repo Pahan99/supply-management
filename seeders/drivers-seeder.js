@@ -12,21 +12,20 @@ drivers = [
     worked_hours: 10
   },
   {
-    user_id: 1,
+    user_id: 3,
     availability: "TRUE",
     worked_hours: 10
   },
 ];
 
 drivers.forEach((driver) => {
-  sql = "INSERT INTO drivers VALUES (?,?,?,?)";
+  sql = "INSERT INTO drivers VALUES (?,?,?)";
   db.query(
     sql,
     [
       driver.user_id,
       driver.availability,
-      driver.worked_hours,
-      driver.last_delivery_id,
+      driver.worked_hours
     ],
     function (err, result) {
       if (err) throw err;

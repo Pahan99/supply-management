@@ -34,7 +34,7 @@ products = [
 ]
 
 products.forEach((product) => {
-    sql = "INSERT INTO product (product_name, unit_price, allocated_space, unit_weight) VALUES (?,?,?,?)";
+    sql = "INSERT INTO products (product_name, unit_price, allocated_space, unit_weight) VALUES (?,?,?,?)";
     db.query(sql, [product.product_name, product.unit_price, product.allocated_space, product.unit_weight], function (err, result) {
         if (err) throw err;
         console.log(result);

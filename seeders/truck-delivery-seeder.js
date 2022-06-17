@@ -17,7 +17,7 @@ truck_delivery = [
     },
     {
         delivery_status: "TRUE" ,
-        driver_assistant_id: 3,
+        driver_assistant_id: 2,
         driver_id: 1,
         route_id: 1,
         truck_id: 1
