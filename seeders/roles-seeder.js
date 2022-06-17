@@ -7,10 +7,10 @@ roles = [
 ];
 
 roles.forEach((role) => {
-  sql = "INSERT INTO roles VALUES (?,?)";
+  sql = "INSERT INTO roles (ID, name) VALUES (?,?)";
   db.query(sql, [role.ID, role.name], function (err, result) {
     if (err) throw err;
     console.log(result);
-    return;
+    process.exit();
   });
 });
