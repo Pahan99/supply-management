@@ -5,19 +5,16 @@ driver_assistants = [
     user_id: 1,
     availability: "TRUE",
     worked_hours: 10,
-    last_delivery_id: 1,
   },
   {
     user_id: 2,
     availability: "FALSE",
     worked_hours: 10,
-    last_delivery_id: 3,
   },
   {
     user_id: 1,
     availability: "TRUE",
     worked_hours: 10,
-    last_delivery_id: 2,
   },
 ];
 
