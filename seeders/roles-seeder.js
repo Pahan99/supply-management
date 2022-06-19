@@ -8,9 +8,12 @@ roles = [
 
 roles.forEach((role) => {
   sql = "INSERT INTO roles (role_id, role_name) VALUES (?,?)";
-  db.query(sql, [role.role_id, role.role_name], function (err, result) {
-    if (err) throw err;
-    console.log(result);
-    process.exit();
-  });
+  db.query(sql, [role.role_id, role.role_name])
+    .then((result) => {
+      console.log(result);
+      process.exit();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
