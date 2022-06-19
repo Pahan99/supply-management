@@ -26,19 +26,40 @@ const viewDashboard = async (req, res) => {
     },
   ];
 
-  res.render("pages/dashboard_manager.ejs", { trains: trains });
-  // res.render("pages/dashboard_supervisor.ejs");
-  // res.render("pages/dashboard_driver.ejs");
-  // res.render("pages/dashboard_assistant.ejs");
+  const roles = {
+    SUPERVISOR: "Supervisor",
+    MANAGER: "Manager",
+    DRIVER: "Truck Driver",
+    DRIVER_ASSISTANT: "Truck Driver Assistant",
+  };
+
+  // Assign User role here
+  const user_role = roles.SUPERVISOR;
+
+  switch (user_role) {
+    case roles.SUPERVISOR:
+      res.render("pages/dashboard_supervisor.ejs");
+      break;
+    case roles.DRIVER:
+      res.render("pages/dashboard_driver.ejs");
+      break;
+    case roles.DRIVER_ASSISTANT:
+      res.render("pages/dashboard_assistant.ejs");
+      break;
+    case roles.MANAGER:
+      res.render("pages/dashboard_manager.ejs", { trains: trains });
+      break;
+    default:
+      break;
+  }
 };
 
 function get_order_ids(orders) {
-  order_ids= [];
-  order_details.forEach(order_detail => {
+  order_ids = [];
+  order_details.forEach((order_detail) => {
     console.log(order_detail.order_id);
   });
 }
-
 
 module.exports = {
   viewHome: viewHome,
