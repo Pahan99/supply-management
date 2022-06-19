@@ -22,12 +22,12 @@
       >
         <div class="card-body">
           <h2 class="title text-center">LOGIN</h2>
-          <form class="form text-center">
+          <form class="form text-center" action="/login" method="post">
             <div class="form-floating mb-3">
               <input
                 type="text"
                 class="form-control"
-                id="username"
+                name="username"
                 placeholder="Username"
               />
               <label for="username" class="username-label">Username</label>
@@ -37,7 +37,7 @@
               <input
                 type="password"
                 class="form-control"
-                id="password"
+                name="password"
                 placeholder="Password"
               />
               <label for="password" class="password-label">Password</label>
@@ -51,7 +51,9 @@
             </div>
 
             <div class="d-grid col-6 mx-auto text-center my-4">
-              <button class="btn btn-dark py-2 shadow-lg">LOGIN</button>
+              <button class="btn btn-dark py-2 shadow-lg" type="submit">
+                LOGIN
+              </button>
             </div>
           </form>
         </div>
