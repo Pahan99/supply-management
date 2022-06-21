@@ -18,7 +18,7 @@ delivery_details = [
     order_id: 1,
   },
   {
-    delivery_id: 6,
+    delivery_id: 5,
     order_id: 1,
   },
 ];
