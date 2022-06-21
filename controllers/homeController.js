@@ -1,3 +1,5 @@
+const orderServices = require("../services/orderServices");
+const userServices = require("../services/userServices");
 const trainServices = require("../services/trainServices");
 
 const viewHome = (req, res) => {
@@ -5,36 +7,17 @@ const viewHome = (req, res) => {
 };
 
 const viewDashboard = async (req, res) => {
-  // Get trains from database
-  let orders = await trainServices.getAllTrains();
-  console.log(orders[0]);
-  trains = [
-    {
-      train_name: "Train A",
-      start_station: "Colombo",
-      end_station: "Galle",
-    },
-    {
-      train_name: "Train B",
-      start_station: "Colombo",
-      end_station: "Kandy",
-    },
-    {
-      train_name: "Train C",
-      start_station: "Colombo",
-      end_station: "Jaffna",
-    },
-  ];
+  const user_id = req.cookies.id;
+  const trains = await trainServices.getAllTrains();
+  const orders = await orderServices.getOrderDetails();
+  const user_role = await userServices.findRole(user_id);
 
-  const roles = {
+  roles = {
     SUPERVISOR: "Supervisor",
-    MANAGER: "Manager",
     DRIVER: "Truck Driver",
     DRIVER_ASSISTANT: "Truck Driver Assistant",
-  };
-
-  // Assign User role here
-  const user_role = roles.SUPERVISOR;
+    MANAGER: "Manager"
+  }
 
   switch (user_role) {
     case roles.SUPERVISOR:
