@@ -20,17 +20,16 @@ driver_assistants = [
 
 driver_assistants.forEach((driver_assistant) => {
   sql = "INSERT INTO driver_assistants VALUES (?,?,?)";
-  db.query(
-    sql,
-    [
-      driver_assistant.user_id,
-      driver_assistant.availability,
-      driver_assistant.worked_hours
-    ],
-    function (err, result) {
-      if (err) throw err;
+  db.query(sql, [
+    driver_assistant.user_id,
+    driver_assistant.availability,
+    driver_assistant.worked_hours,
+  ])
+    .then((result) => {
       console.log(result);
       process.exit();
-    }
-  );
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });

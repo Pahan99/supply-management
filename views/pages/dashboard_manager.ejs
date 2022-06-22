@@ -7,7 +7,7 @@
       class="min-height-300 bg-gradient-primary position-absolute fixed-top w-100"
       style="z-index: -1"
     ></div>
-    <%- include('../components/navbar.ejs') %> <%- trains[0].train_name %>
+    <%- include('../components/navbar.ejs') %>
     <div class="container-fluid col-10">
       <div class="row mt-4 px-5 trip bg-gray-100 border-radius-lg">
         <nav class="">
@@ -82,6 +82,10 @@
                       <i class="fa fa-hourglass-end"></i>&nbsp;&nbsp;Journey
                       End: Colombo 6.00 p.m
                     </p>
+                    <p class="text-sm address">
+                      <i class="fa fa-map-marker"></i>&nbsp;&nbsp;Location:
+                      Colombo
+                    </p>
                   </div>
                   <div
                     class="buttons col-md-5 col-10 d-flex align-items-end justify-content-end"
@@ -114,10 +118,8 @@
                       >
                         <thead>
                           <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Dispatch Location</th>
-                            <th scope="col">Related Store</th>
-                            <th scope="col">Order Date</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Quantity</th>
                             <th scope="col">Weight</th>
                           </tr>
                         </thead>
@@ -126,36 +128,16 @@
                             <td>22/02/2022</td>
                             <td>Temple Road, colombo</td>
                             <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
                           </tr>
                           <tr>
                             <td>22/02/2022</td>
                             <td>Temple Road, colombo</td>
                             <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
                           </tr>
                           <tr>
                             <td>22/02/2022</td>
                             <td>Temple Road, colombo</td>
                             <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
                           </tr>
                         </tbody>
                       </table>
@@ -163,7 +145,7 @@
                   </div>
                 </div>
               </div>
-              <br>
+              <br />
               <% } %>
             </div>
           </div>
