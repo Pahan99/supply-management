@@ -5,17 +5,8 @@ order_details = [
   { order_id: 1, product_id: 1, quantity: 2 },
   { order_id: 1, product_id: 2, quantity: 1 },
   { order_id: 1, product_id: 3, quantity: 3 },
-  { order_id: 1, product_id: 1, quantity: 1 },
   { order_id: 1, product_id: 4, quantity: 4 },
   { order_id: 1, product_id: 5, quantity: 4 },
-  { order_id: 1, product_id: 2, quantity: 2 },
-  { order_id: 1, product_id: 3, quantity: 3 },
-  { order_id: 1, product_id: 5, quantity: 1 },
-  { order_id: 1, product_id: 1, quantity: 5 },
-  { order_id: 1, product_id: 2, quantity: 3 },
-  { order_id: 1, product_id: 5, quantity: 1 },
-  { order_id: 1, product_id: 3, quantity: 1 },
-  { order_id: 1, product_id: 4, quantity: 2 },
 ];
 
 // remove unit_price

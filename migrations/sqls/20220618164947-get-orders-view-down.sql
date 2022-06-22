@@ -1,1 +1,0 @@
-DROP VIEW `get_order_details`;
