@@ -58,14 +58,14 @@
             aria-labelledby="nav-recieved-tab"
           >
             <div class="row mt-4 px-5 trip">
-              <% for( let i = 0; i < trains.length; i++ ) { %>
+              <% for( let i = 0; i < orders.length; i++ ) { %>
 
               <div class="my-3 px-3 d-grid accordion" id="trip">
                 <div class="row accordion-item">
                   <div class="accordion-body col-md-7 col-10">
                     <h5 class="title route text-dark">
                       <i class="fa fa-train"></i>&nbsp; <%=
-                      trains[i].start_station %> - <%= trains[i].end_station %>
+                      orders[i].start_station %> - <%= orders[i].end_station %>
                     </h5>
                     <hr />
                     <p class="text-sm capacity">

@@ -8,16 +8,15 @@ const viewHome = (req, res) => {
 
 const viewDashboard = async (req, res) => {
   const user_id = req.cookies.id;
-  const trains = await trainServices.getAllTrains();
   const orders = await orderServices.getOrderDetails();
   const user_role = await userServices.findRole(user_id);
-
+  console.log(orders);
   roles = {
     SUPERVISOR: "Supervisor",
     DRIVER: "Truck Driver",
     DRIVER_ASSISTANT: "Truck Driver Assistant",
-    MANAGER: "Manager"
-  }
+    MANAGER: "Manager",
+  };
 
   switch (user_role) {
     case roles.SUPERVISOR:
@@ -30,7 +29,8 @@ const viewDashboard = async (req, res) => {
       res.render("pages/dashboard_assistant.ejs");
       break;
     case roles.MANAGER:
-      res.render("pages/dashboard_manager.ejs", { trains: trains });
+      // res.send("Manager");
+      res.render("pages/dashboard_manager.ejs", { orders: orders });
       break;
     default:
       break;
