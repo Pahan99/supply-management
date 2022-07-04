@@ -2,20 +2,11 @@ const { db } = require("../database/db-config");
 
 driver_assistants = [
   {
-    user_id: 1,
+    user_id: 5,
     availability: "TRUE",
     worked_hours: 10,
   },
-  {
-    user_id: 2,
-    availability: "FALSE",
-    worked_hours: 10,
-  },
-  {
-    user_id: 1,
-    availability: "TRUE",
-    worked_hours: 10,
-  },
+
 ];
 
 driver_assistants.forEach((driver_assistant) => {

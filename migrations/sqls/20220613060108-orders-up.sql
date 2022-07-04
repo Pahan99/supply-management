@@ -1,5 +1,5 @@
 CREATE TABLE `orders` (
-	`order_id` INT NOT NULL AUTO_INCREMENT,
+	`order_id` INT NOT NULL,
 	`customer_id` INT NOT NULL,
 	`cost` DECIMAL(10,2) NOT NULL,
 	`route_id` INT NOT NULL,

@@ -1,6 +1,6 @@
 CREATE TABLE `train_trips` (
-	`train_id` INT NOT NULL,
 	`trip_id` INT NOT NULL AUTO_INCREMENT,
+	`train_id` INT NOT NULL,
 	`destination` varchar(255) NOT NULL,
 	`capacity_occupied` DECIMAL(10,2),
     PRIMARY KEY (`trip_id`),
