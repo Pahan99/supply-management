@@ -12,9 +12,9 @@
 
 ### 
 - If the database is empty,
-  - To create tables, run `db-migrate up get-orders-view --config database/database.json`
+  - To create tables, run `db-migrate up roles --config database/database.json`
   - To delete all tables, run `db-migrate reset --config database/database.json`
 - Else
   - To delete all tables, run `db-migrate reset --config database/database.json`
-  - To create tables, run `db-migrate up get-orders-view --config database/database.json`
+  - To create tables, run `db-migrate up roles --config database/database.json`
 - To add data, run `npm run seeders`

@@ -5,5 +5,7 @@ CREATE TABLE `trains` (
 	`start_station` varchar(255),
 	`end_station` varchar(255),
 	`departure` DATETIME,
-	PRIMARY KEY (`train_id`)
+	`branch_id` INT NOT NULL,
+	PRIMARY KEY (`train_id`),
+	CONSTRAINT `trains_fk0` FOREIGN KEY (`branch_id`) REFERENCES `branches`(`branch_id`) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
