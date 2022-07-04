@@ -1,1 +1,1 @@
-DROP VIEW `get_tot_weight`
+DROP VIEW IF EXISTS `get_tot_weight`

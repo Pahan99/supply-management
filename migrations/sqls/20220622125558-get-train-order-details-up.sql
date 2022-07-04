@@ -1,4 +1,4 @@
-CREATE VIEW get_train_order_details AS SELECT 
+/* CREATE VIEW get_train_order_details AS SELECT 
 	o.order_id,
 	c.address,
     t.train_name,
@@ -15,4 +15,4 @@ LEFT JOIN train_trip_details ttd USING(order_id)
 LEFT JOIN train_trips tt USING(trip_id)
 LEFT JOIN trains t USING(train_id)
 LEFT JOIN order_status os USING(status_id)
-group by order_id;
+group by order_id; */

@@ -1,1 +1,1 @@
-DROP VIEW `get_train_order_details`
+DROP VIEW IF EXISTS `get_train_order_details`

@@ -1,1 +1,1 @@
-DROP VIEW `get_order_product_details`
+DROP VIEW IF EXISTS `get_order_product_details`
