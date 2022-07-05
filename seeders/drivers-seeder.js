@@ -1,31 +1,25 @@
-const { db } = require("../database/db-config");
+// const { db } = require("../database/db-config");
 
-drivers = [
-  {
-    user_id: 1,
-    availability: "TRUE",
-    worked_hours: 10,
-  },
-  {
-    user_id: 2,
-    availability: "FALSE",
-    worked_hours: 10,
-  },
-  {
-    user_id: 3,
-    availability: "TRUE",
-    worked_hours: 10,
-  },
-];
+// drivers = [
+//   {
+//     user_id: 1,
+//   },
+//   {
+//     user_id: 2,
+//   },
+//   {
+//     user_id: 3,
+//   },
+// ];
 
-drivers.forEach((driver) => {
-  sql = "INSERT INTO drivers VALUES (?,?,?)";
-  db.query(sql, [driver.user_id, driver.availability, driver.worked_hours])
-    .then((result) => {
-      console.log(result);
-      process.exit();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+// drivers.forEach((driver) => {
+//   sql = "INSERT INTO drivers (user_id) VALUES (?)";
+//   db.query(sql, [driver.user_id])
+//     .then((result) => {
+//       console.log(result);
+//       process.exit();
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// });

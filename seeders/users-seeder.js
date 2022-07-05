@@ -3,66 +3,174 @@ const { db } = require("../database/db-config");
 users = [
   {
     user_id: 1,
-    name: "akash tharuka",
-    email: "test@gmail.com",
-    password: "password",
-    phone: "0123456789",
+    name: "Induwara Perera",
+    email: "Indu12@gmail.com",
+    password: "ABC@123",
+    phone: "0776548932",
     role_id: 1,
     branch_id: 0,
   },
   {
     user_id: 2,
-    name: "pahan pahan",
-    email: "test2@gmail.com",
-    password: "password",
-    phone: "0123452289",
+    name: "Akash Tharuka",
+    email: "akash@gmail.com",
+    password: "pqr123",
+    phone: "0783654951",
     role_id: 2,
     branch_id: 1,
   },
   {
     user_id: 3,
-    name: "sanduni sanduni",
-    email: "test3@gmail.com",
-    password: "password",
-    phone: "0123456789",
+    name: "Pahan Isuru",
+    email: "Isuru19@gmail.com",
+    password: "hello12",
+    phone: "0764455987",
+    role_id: 2,
+    branch_id: 2,
+  },
+  {
+    user_id: 4,
+    name: "Sanduni Ayesha",
+    email: "Aye99@gmail.com",
+    password: "aye456",
+    phone: "0723355946",
+    role_id: 2,
+    branch_id: 3,
+  },
+  {
+    user_id: 5,
+    name: "Nipun Pramuditha",
+    email: "Pram90@gmail.com",
+    password: "345gh",
+    phone: "0719486592",
+    role_id: 2,
+    branch_id: 4,
+  },
+  {
+    user_id: 6,
+    name: "Sahan Chethika",
+    email: "Sahan.C@gmail.com",
+    password: "rergeb",
+    phone: "0759413684",
+    role_id: 2,
+    branch_id: 5,
+  },
+  {
+    user_id: 7,
+    name: "Aruna Shaminda",
+    email: "Aruna.shaminda.123@gmail.com",
+    password: "aru#345",
+    phone: "0779366588",
+    role_id: 2,
+    branch_id: 6,
+  },
+  {
+    user_id: 8,
+    name: "Prasad Sandaru",
+    email: "SandaruP@gmail.com",
+    password: "pra@sa",
+    phone: "0779635486",
     role_id: 3,
     branch_id: 1,
   },
   {
-    user_id: 4,
-    name: "nipun nipun",
-    email: "test4@gmail.com",
-    password: "password",
-    phone: "0123456789",
+    user_id: 9,
+    name: "Deshan Samiru",
+    email: "Samir.desh@gmail.com",
+    password: "123@desh",
+    phone: "0786542591",
+    role_id: 3,
+    branch_id: 1,
+  },
+  {
+    user_id: 10,
+    name: "Kalsara Dhanushka",
+    email: "Kalsara@gmail.com",
+    password: "ABC#abc",
+    phone: "0757556894",
+    role_id: 3,
+    branch_id: 1,
+  },
+  {
+    user_id: 11,
+    name: "Dinuk Jayaruwan",
+    email: "Dinuk@gmail.com",
+    password: "jaay@",
+    phone: "0756699884",
+    role_id: 3,
+    branch_id: 1,
+  },
+  {
+    user_id: 12,
+    name: "Hashan Weerasinghe",
+    email: "HashanWeera@gmail.com",
+    password: "HashW123",
+    phone: "0773695961",
+    role_id: 3,
+    branch_id: 1,
+  },
+  {
+    user_id: 13,
+    name: "Piumantha Fernando",
+    email: "FernandPiyumantha@gmail.com",
+    password: "FP@123",
+    phone: "078664235",
     role_id: 4,
     branch_id: 1,
   },
   {
-    user_id: 5,
-    name: "sahan sahan",
-    email: "test5@gmail.com",
-    password: "password",
-    phone: "0123456789",
-    role_id: 3,
+    user_id: 14,
+    name: "Chanitha Sandaru",
+    email: "ChanithS@gmail.com",
+    password: "SChandi*",
+    phone: "0715487584",
+    role_id: 4,
+    branch_id: 1,
+  },
+  {
+    user_id: 15,
+    name: "Damsara Peiris",
+    email: "Damsara@gmail.com",
+    password: "Pieris123",
+    phone: "0773325698",
+    role_id: 4,
+    branch_id: 1,
+  },
+  {
+    user_id: 16,
+    name: "Amal Prem",
+    email: "Prem@gmail.com",
+    password: "PremAmal@",
+    phone: "0726589412",
+    role_id: 4,
+    branch_id: 1,
+  },
+  {
+    user_id: 17,
+    name: "Mahinda Jayalath",
+    email: "MahiJ@gmail.com",
+    password: "85@Mahi",
+    phone: "0719965864",
+    role_id: 4,
     branch_id: 1,
   },
 ];
 
-users.forEach((user) => {
-  sql =
-    "INSERT INTO users (name, email, password, phone, role_id, branch_id) VALUES (?,?,?,?,?,?)";
-  db.query(sql, [
-    user.name,
-    user.email,
-    user.password,
-    user.phone,
-    user.role_id,
-    user.branch_id,
-  ])
-    .then(() => {
-      process.exit();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+async function add_users() {
+  for (let i = 0; i < users.length; i++) {
+    user = users[i];
+    sql =
+      "INSERT INTO users (user_id, name, email, password, phone, role_id, branch_id) VALUES (?,?,?,?,?,?,?)";
+    await db.query(sql, [
+      user.user_id,
+      user.name,
+      user.email,
+      user.password,
+      user.phone,
+      user.role_id,
+      user.branch_id,
+    ]);
+  }
+  process.exit();
+}
+add_users();

@@ -7,7 +7,7 @@
     "start": "node server.js",
     "start-dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seeders": "node seeders/branch-seeder && node seeders/customers-seeder && node seeders/roles-seeder && node seeders/users-seeder && node seeders/drivers-seeder && node seeders/driver-assistants-seeder && node seeders/route-seeder && node seeders/trains-seeder && node seeders/train-trips-seeder && node seeders/order-status-seeder && node seeders/orders-seeder && node seeders/products-seeder && node seeders/order-details-seeder && node seeders/train-trip-details-seeder && node seeders/truck-seeder && node seeders/truck-delivery-seeder && node seeders/delivery-details-seeder"
+    "seeders": "node seeders/branch-seeder && node seeders/customers-seeder && node seeders/roles-seeder && node seeders/users-seeder && node seeders/drivers-seeder && node seeders/driver-assistants-seeder && node seeders/route-seeder && node seeders/trains-seeder && node seeders/train-trips-seeder && node seeders/order-status-seeder && node seeders/orders-seeder && node seeders/products-seeder && node seeders/order-details-seeder && node seeders/train-trip-details-seeder && node seeders/truck-seeder && node seeders/truck-delivery-seeder && node seeders/delivery-details-seeder && node seeders/trains-branch-seeder"
   },
   "keywords": [],
   "author": "",

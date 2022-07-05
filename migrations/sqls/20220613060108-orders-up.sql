@@ -1,7 +1,6 @@
 CREATE TABLE `orders` (
 	`order_id` INT NOT NULL,
 	`customer_id` INT NOT NULL,
-	`cost` DECIMAL(10,2) NOT NULL,
 	`route_id` INT NOT NULL,
 	`status_id` INT NOT NULL,
     `order_date` DATE,
