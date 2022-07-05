@@ -47,15 +47,17 @@ const viewReports = async (req, res) => {
   const sales_details_per_branch = await reportServices.getCityRouteSalesDetails(0, 1);
   const total_used_time = await reportServices.getTruckDetails();
 
+  console.log(driver_details);
+
   // for testing
-  res.send({
-    sales_details,
-    trending_item_details,
-    driver_details,
-    sales_details_per_branch,
-    total_used_time,
-  });
-  // res.render("pages/report.ejs", { title: "report" });
+  // res.send({
+  //   sales_details,
+  //   trending_item_details,
+  //   driver_details,
+  //   sales_details_per_branch,
+  //   total_used_time,
+  // });
+  res.render("pages/report.ejs", { title: "report" });
 }
 
 function get_order_ids(orders) {

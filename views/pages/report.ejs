@@ -1,13 +1,178 @@
 <html lang="en">
   <head>
-    <%- include('../components/header.ejs',{ title: title })%>
+    <%- include('../components/header.ejs', { title: title })%>
+    <style>
+      .title{
+        letter-spacing: 0.8rem;
+      }
+    </style>
   </head>
   <body>
+    <div class="min-height-300 bg-gradient-primary position-absolute fixed-top z-index-0 w-100"></div>
+
     <%- include('../components/navbar.ejs') %>
 
-    <div class="container-fluid col-10">
-      <!-- content goes here... -->
+    <div class="container-fluid col-11">
+      <div class="row px-3">
+        <div class="col mx-auto">
+          <div class="card card-stats m-4 mx-auto">
+            <div class="card-body">
+              <div class="row">
+                  <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Total Customers</h5>
+                      <span class="h2 font-weight-bold mb-0">2,356</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-dark rounded-circle shadow text-center">
+                        <i class="ni ni-single-02"></i>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col mx-auto">
+          <div class="card card-stats m-4 mx-auto">
+            <div class="card-body">
+              <div class="row">
+                  <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Total Sales</h5>
+                      <span class="h2 font-weight-bold mb-0">15,762</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-dark rounded-circle shadow text-center">
+                        <i class="ni ni-money-coins"></i>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="card card-stats my-4 mx-2 mx-auto">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-6">
+                  <form>
+                    <div class="form-group">
+                      <label for="exampleFormControlSelect1">Select Year</label>
+                      <select class="form-control" id="exampleFormControlSelect1">
+                        <option>2022</option>
+                        <option>2023</option>
+                        <option>2024</option>
+                        <option>2025</option>
+                        <option>2026</option>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="col-6">
+                  <form>
+                    <div class="form-group">
+                      <label for="exampleFormControlSelect1">Select Month Range</label>
+                      <select class="form-control" id="exampleFormControlSelect1">
+                        <option default value="1">quarter 1 - january to March</option>
+                        <option value="2">quarter 2 - April to June</option>
+                        <option value="3">quarter 3 - July to September</option>
+                        <option value="4">quarter 4 - October to December</option>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="col-6">
+                  <div class="card card-stats m-4 mx-auto shadow-lg">
+                    <div class="card-body">
+                      <div class="row">
+                          <div class="col">
+                              <h5 class="card-title text-uppercase text-muted mb-0">Number of Sales</h5>
+                              <span class="h2 font-weight-bold mb-0">2,356</span>
+                          </div>
+                          <div class="col-auto">
+                            <div class="icon icon-shape bg-dark rounded-circle shadow text-center">
+                                <i class="ni ni-single-02"></i>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="card card-stats m-4 mx-auto shadow-lg">
+                    <div class="card-body">
+                      <div class="row">
+                          <div class="col">
+                              <h5 class="card-title text-uppercase text-muted mb-0">Revenue</h5>
+                              <span class="h2 font-weight-bold mb-0">147,100.00</span>
+                          </div>
+                          <div class="col-auto">
+                            <div class="icon icon-shape bg-dark rounded-circle shadow text-center">
+                                <i class="ni ni-single-02"></i>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="card card-stats m-4 mx-auto">
+            <div class="card-body">
+              <div class="row">
+                <h6 class="mb-3">Trending Items</h6>
+                <div class="col-10 mx-auto">
+                  <table class="table table-striped table-hover text-center">
+                    <thead>
+                      <tr class="text-dark">
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Unit Price</th>
+                        <th scope="col">Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>4</th>
+                        <td>Denims</td>
+                        <td>1800.00</td>
+                        <td>4</td>
+                      </tr>
+                      <tr>
+                        <td>5</th>
+                        <td>Bottle</td>
+                        <td>500.00</td>
+                        <td>4</td>
+                      </tr>
+                      <tr>
+                        <td>3</th>
+                        <td>Phone</td>
+                        <td>45000.00</td>
+                        <td>3</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </div>
+
     <%- include('../components/js-scripts.ejs') %>
   </body>
 </html>
