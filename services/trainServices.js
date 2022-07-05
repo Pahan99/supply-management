@@ -1,4 +1,5 @@
 const { db } = require("../database/db-config");
+const { make_partitions } = require("./schedulers/trainScheduler");
 
 order_status_list = {
   NOT_LOADED_TRAIN: "not_loaded_train",
@@ -43,7 +44,9 @@ const getTrainOrderPartitionsByStatus = async () => {
   return result[0];
 };
 
-const makePartitions = () => {};
+const makePartitions = async () => {
+  await make_partitions();
+};
 
 module.exports = {
   getAllTrains,

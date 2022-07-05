@@ -8,9 +8,9 @@ const viewHome = (req, res) => {
 
 const viewDashboard = async (req, res) => {
   const user_id = req.cookies.id;
-  const orders = await orderServices.getOrderDetails();
+  // const orders = await orderServices.getOrderDetails();
   const user_role = await userServices.findRole(user_id);
-  console.log(orders);
+  // console.log(orders);
   roles = {
     SUPERVISOR: "Supervisor",
     DRIVER: "Truck Driver",
@@ -21,6 +21,7 @@ const viewDashboard = async (req, res) => {
   switch (user_role) {
     case roles.SUPERVISOR:
       res.render("pages/dashboard_supervisor.ejs");
+      await trainServices.makePartitions();
       break;
     case roles.DRIVER:
       res.render("pages/dashboard_driver.ejs");
@@ -30,7 +31,7 @@ const viewDashboard = async (req, res) => {
       break;
     case roles.MANAGER:
       // res.send("Manager");
-      res.render("pages/dashboard_manager.ejs", { orders: orders });
+      res.render("pages/dashboard_manager.ejs", { orders: [] });
       break;
     default:
       break;
