@@ -2,35 +2,100 @@ const { db } = require("../database/db-config");
 
 customers = [
   {
-    customer_name: "Sasani",
+    customer_id: 1,
+    customer_name: "Sasani Isurindi",
     address: "Moratuwa, Colombo",
     phone: "0771133436",
   },
   {
-    customer_name: "Hirun",
+    customer_id: 2,
+    customer_name: "Hirun Kaweesh",
     address: "Karapitiya, Galle",
     phone: "0775769392",
   },
   {
-    customer_name: "Kalani",
+    customer_id: 3,
+    customer_name: "Kalani Dhananji",
     address: "Temple Rd, Matara",
     phone: "0779900446",
   },
   {
-    customer_name: "Jilan",
+    customer_id: 4,
+    customer_name:"Jilan Abeysekara",
     address: "Flower Rd, Colombo",
     phone: "0762342234",
   },
   {
-    customer_name: "Piumi",
-    address: "Jaffna",
+    customer_id: 5,
+    customer_name: "Piumi Withanage",
+    address: "212/A, Srikrishna Rd, Jaffna",
     phone: "0756780987",
+  },
+  {
+    customer_id: 6,
+    customer_name: "Manoj Madushanka",
+    address: "Maas Dresses, Colombo 5",
+    phone: "0702347546",
+  },
+  {
+    customer_id: 7,
+    customer_name: "Shashini Perera",
+    address: "Shashi Tailors, Hambanthota",
+    phone: "0789876354",
+  },
+  {
+    customer_id: 8,
+    customer_name: "Menuka Hiran",
+    address: "Menuka Wear, Trincomalee",
+    phone: "0756318946",
+  },
+  {
+    customer_id: 9,
+    customer_name: "Bandu Gunasekara",
+    address: "34/A, Kumara Rd, Gampaha",
+    phone: "0779163548",
+  },
+  {
+    customer_id: 10,
+    customer_name: "Sunil Shantha",
+    address: "Viana Fashion, Sun street, Kurunegala",
+    phone: "0769824753",
+  },
+  {
+    customer_id: 11,
+    customer_name: "Veenu Nethara",
+    address: "Neth Fashion, Perer Rd, Colombo 5",
+    phone: "0789365478",
+  },
+  {
+    customer_id: 12,
+    customer_name: "Kalana Nanayakkara",
+    address: "Kalana costumes, Havelock Street, Gampaha",
+    phone: "0769824753",
+  },
+  {
+    customer_id: 13,
+    customer_name: "Hasith Kaushal",
+    address: "88/C, Hasi Fashion, Elpitiya",
+    phone: "0709975266",
+  },
+  {
+    customer_id: 14,
+    customer_name: "Nethmi Ishara",
+    address: "80/T, Neth, Hambantota",
+    phone: "0773665549",
+  },
+  {
+    customer_id: 15,
+    customer_name: "Akram",
+    address: "Sri Ganesh, Mulativ",
+    phone: "0784514512",
   },
 ];
 
 customers.forEach((customer) => {
-  sql = "INSERT INTO customers (customer_name, address, phone) VALUES (?,?,?)";
-  db.query(sql, [customer.customer_name, customer.address, customer.phone])
+  sql = "INSERT INTO customers (customer_id, customer_name, address, phone) VALUES (?,?,?,?)";
+  db.query(sql, [customer.customer_id, customer.customer_name, customer.address, customer.phone])
     .then((result) => {
       console.log(result);
       process.exit();
