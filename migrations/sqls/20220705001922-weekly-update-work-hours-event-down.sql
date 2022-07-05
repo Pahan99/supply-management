@@ -1,0 +1,1 @@
+DROP EVENT IF EXISTS weekly_update_work_hours;

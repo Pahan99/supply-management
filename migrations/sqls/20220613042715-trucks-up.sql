@@ -1,5 +1,5 @@
 CREATE TABLE `trucks` (
-	`truck_id` INT NOT NULL AUTO_INCREMENT,
+	`truck_id` INT NOT NULL,
 	`vehicle_no` varchar(25) NOT NULL,
 	`capacity` INT,
 	`branch_id` INT NOT NULL,

@@ -10,14 +10,12 @@ branches = [
   { branch_id: 6, branch_name: "Trinco" },
 ];
 
-branches.forEach((branch) => {
-  sql = "INSERT INTO branches (branch_id,branch_name) VALUES (?,?)";
-  db.query(sql, [branch.branch_id, branch.branch_name])
-    .then((result) => {
-      console.log(branch.branch_name);
-      process.exit();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+async function addBranches() {
+  for (let i = 0; i < branches.length; i++) {
+    branch = branches[i];
+    sql = "INSERT INTO branches (branch_id,branch_name) VALUES (?,?)";
+    await db.query(sql, [branch.branch_id, branch.branch_name]);
+  }
+  process.exit();
+}
+addBranches();

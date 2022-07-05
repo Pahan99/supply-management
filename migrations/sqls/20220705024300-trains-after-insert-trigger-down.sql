@@ -1,0 +1,1 @@
+DROP TRIGGER IF EXISTS trains_after_insert;
