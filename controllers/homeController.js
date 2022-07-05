@@ -1,6 +1,7 @@
 const orderServices = require("../services/orderServices");
 const userServices = require("../services/userServices");
 const trainServices = require("../services/trainServices");
+const reportServices = require("../services/reportServices");
 
 const viewHome = (req, res) => {
   res.render("pages/login.ejs");
@@ -37,6 +38,26 @@ const viewDashboard = async (req, res) => {
   }
 };
 
+const viewReports = async (req, res) => {
+  const user_id = req.cookies.id;
+
+  const sales_details = await reportServices.getQuarterYearlySalesDetails(2022, 2);
+  const trending_item_details = await reportServices.getTrendingItemsDetails();
+  const driver_details = await reportServices.getDriverDetails();
+  const sales_details_per_branch = await reportServices.getCityRouteSalesDetails(0, 1);
+  const total_used_time = await reportServices.getTruckDetails();
+
+  // for testing
+  res.send({
+    sales_details,
+    trending_item_details,
+    driver_details,
+    sales_details_per_branch,
+    total_used_time,
+  });
+  // res.render("pages/report.ejs", { title: "report" });
+}
+
 function get_order_ids(orders) {
   order_ids = [];
   order_details.forEach((order_detail) => {
@@ -45,6 +66,7 @@ function get_order_ids(orders) {
 }
 
 module.exports = {
-  viewHome: viewHome,
-  viewDashboard: viewDashboard,
+  viewHome,
+  viewDashboard,
+  viewReports,
 };

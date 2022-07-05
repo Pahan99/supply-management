@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get("/", homeController.viewHome);
 router.get("/dashboard", requireAuth, homeController.viewDashboard);
+router.get("/report", requireAuth, homeController.viewReports);
 
 
 module.exports = router;
