@@ -96,6 +96,7 @@ const make_partitions = async () => {
   let assigned = [];
   let missed = {};
   while (assigned.length != orders.length) {
+    if (orders.length == 0) break;
     for (let i = 0; i < orders.length; i++) {
       const partitions = [];
       const order_id = orders[i].order_id;
@@ -106,7 +107,10 @@ const make_partitions = async () => {
       const route_id = orders[i].route_id;
 
       const product_list = await get_order_products(order_id);
-      if (product_list.length == 0) continue;
+      if (product_list.length == 0) {
+        assigned.push(order_id);
+        continue;
+      }
       const trips = await get_train_trips(route_id);
       if (missed[order_id].length == 0) {
         for (let i = 0; i < product_list.length; i++) {
@@ -151,7 +155,6 @@ const make_partitions = async () => {
           if (missed[order_id].length == 0) break;
         }
       }
-
       await update_train_partitions(partitions);
       // console.log(order_id, missed[order_id].length == 0);
       if (missed[order_id].length == 0) {
@@ -161,7 +164,7 @@ const make_partitions = async () => {
       await add_train_trips(route_id);
     }
   }
-  process.exit();
+  return;
 };
 
 exports.make_partitions = make_partitions;
