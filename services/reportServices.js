@@ -69,21 +69,30 @@ const getCityRouteSalesDetails = async (branch, route) => {
     return result;
 }
 
+const getRoutesForBranch = async (branch) => {
+    const sql_routes = `SELECT route_id, route_name 
+                        FROM routes 
+                        WHERE branch_id=?;`;
+    const routes = await db.query(sql_routes, [branch]);
+
+    return routes[0];
+}
+
 const getTrendingItemsDetails = async () => {
-    const sql_trending_products = `SELECT product_id, product_name, unit_price, quantity 
+    const sql_trending_products = `SELECT DISTINCT product_id, product_name, unit_price, quantity 
                                 FROM order_details 
                                 LEFT OUTER JOIN orders USING(order_id) 
                                 LEFT OUTER JOIN products USING(product_id)
                                 WHERE status_id=5 
-                                ORDER BY quantity DESC LIMIT 3;`;
+                                ORDER BY quantity DESC LIMIT 10;`;
 
     const trending_product_details = await db.query(sql_trending_products);
     return trending_product_details[0];
 }
 
 const getDriverDetails = async () => {
-    const sql_driver_details = `SELECT user_id, name, worked_hours FROM drivers LEFT OUTER JOIN users USING(user_id);`;
-    const sql_assistant_details = `SELECT user_id, name, worked_hours FROM driver_assistants LEFT OUTER JOIN users USING(user_id);`;
+    const sql_driver_details = `SELECT user_id, name, weekly_hours FROM drivers LEFT OUTER JOIN users USING(user_id);`;
+    const sql_assistant_details = `SELECT user_id, name, weekly_hours FROM driver_assistants LEFT OUTER JOIN users USING(user_id);`;
 
     const driver_details = await db.query(sql_driver_details);
     const assistant_details = await db.query(sql_assistant_details);
@@ -114,10 +123,42 @@ const getTruckDetails = async () => {
     return result;
 }
 
+const getCustomerCount = async () => {
+    const sql_customer_count = `SELECT COUNT(DISTINCT customer_id) AS customer_count FROM customers`;
+
+    const customer_count = await db.query(sql_customer_count);
+
+    return customer_count[0][0].customer_count;
+}
+
+const getTotalSales = async () => {
+    const sql_total_sales = `SELECT SUM(quantity) AS total_sales FROM order_details`;
+
+    const total_sales = await db.query(sql_total_sales);
+
+    return total_sales[0][0].total_sales;
+}
+
+const getOrderCustomerDetails = async () => {
+    const sql_order_customer_details = `SELECT customer_id, customer_name, order_id, status, order_date 
+                                        FROM orders LEFT OUTER JOIN customers 
+                                        USING(customer_id) LEFT OUTER JOIN order_status 
+                                        USING(status_id) 
+                                        ORDER BY order_date;`;
+
+    const order_customer_details = await db.query(sql_order_customer_details);
+
+    return order_customer_details[0];
+}
+
 module.exports = {
     getQuarterYearlySalesDetails,
     getCityRouteSalesDetails,
     getTrendingItemsDetails,
     getDriverDetails,
     getTruckDetails,
+    getCustomerCount,
+    getTotalSales,
+    getRoutesForBranch,
+    getOrderCustomerDetails,
 }

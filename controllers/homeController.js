@@ -41,23 +41,23 @@ const viewDashboard = async (req, res) => {
 const viewReports = async (req, res) => {
   const user_id = req.cookies.id;
 
-  const sales_details = await reportServices.getQuarterYearlySalesDetails(2022, 2);
   const trending_item_details = await reportServices.getTrendingItemsDetails();
   const driver_details = await reportServices.getDriverDetails();
-  const sales_details_per_branch = await reportServices.getCityRouteSalesDetails(0, 1);
   const total_used_time = await reportServices.getTruckDetails();
+  const customer_count = await reportServices.getCustomerCount();
+  const total_sales = await reportServices.getTotalSales();
+  const order_customer_details = await reportServices.getOrderCustomerDetails();
 
-  console.log(driver_details);
+  const data = {
+    driver_details: driver_details.driver_details,
+    assistant_details: driver_details.assistant_details,
+    trending_item_details: trending_item_details,
+    customer_count: customer_count,
+    total_sales: total_sales,
+    order_customer_details: order_customer_details,
+  }
 
-  // for testing
-  // res.send({
-  //   sales_details,
-  //   trending_item_details,
-  //   driver_details,
-  //   sales_details_per_branch,
-  //   total_used_time,
-  // });
-  res.render("pages/report.ejs", { title: "report" });
+  res.render("pages/report.ejs", { title: "report", data: data });
 }
 
 function get_order_ids(orders) {
