@@ -2,15 +2,18 @@ const orderServices = require("../services/orderServices");
 const userServices = require("../services/userServices");
 const trainServices = require("../services/trainServices");
 
+const { order_status_list } = require("../services/helpers/data");
+
 const viewHome = (req, res) => {
   res.render("pages/login.ejs");
 };
 
 const viewDashboard = async (req, res) => {
   const user_id = req.cookies.id;
-  // const orders = await orderServices.getOrderDetails();
+
   const user_role = await userServices.findRole(user_id);
-  // console.log(orders);
+  const user_branch_id = await userServices.findBranch(user_id);
+  // console.log(user_branch_id);
   roles = {
     SUPERVISOR: "Supervisor",
     DRIVER: "Truck Driver",
@@ -18,10 +21,10 @@ const viewDashboard = async (req, res) => {
     MANAGER: "Manager",
   };
 
+  await trainServices.makePartitions();
   switch (user_role) {
     case roles.SUPERVISOR: {
       // res.render("pages/dashboard_supervisor.ejs");
-      await trainServices.makePartitions();
 
       const trips = await trainServices.getTrainTrips();
 
@@ -30,8 +33,10 @@ const viewDashboard = async (req, res) => {
       for (let i = 0; i < trips.length; i++) {
         const trip = trips[i];
         trip.dep_date = formatDate(trip.dep_date);
+
         const trip_orders = await trainServices.getTrainTripDetails(
-          trip.trip_id
+          trip.trip_id,
+          order_status_list.NOT_LOADED_TRAIN
         );
         if (trip_orders.length == 0) continue;
         trip_orders.forEach((order) => {
@@ -43,7 +48,7 @@ const viewDashboard = async (req, res) => {
         });
       }
 
-      console.log(records[1]);
+      // console.log(records[1]);
       res.render("pages/dashboard_supervisor.ejs", { records });
       break;
     }
@@ -54,8 +59,53 @@ const viewDashboard = async (req, res) => {
       res.render("pages/dashboard_assistant.ejs");
       break;
     case roles.MANAGER:
-      // res.send("Manager");
-      res.render("pages/dashboard_manager.ejs", { orders: [] });
+      const trips = await trainServices.getTrainTripsByBranch(user_branch_id);
+
+      const loaded = [];
+      const in_store = [];
+      // console.log(partitions);
+      for (let i = 0; i < trips.length; i++) {
+        const trip = trips[i];
+        trip.dep_date = formatDate(trip.dep_date);
+        const loaded_trains = await trainServices.getTrainTripDetailsByBranch(
+          trip.trip_id,
+          order_status_list.LOADED_TRAIN,
+          user_branch_id
+        );
+        const in_store_details =
+          await trainServices.getTrainTripDetailsByBranch(
+            trip.trip_id,
+            order_status_list.IN_STORE,
+            user_branch_id
+          );
+
+        if (loaded_trains.length != 0) {
+          loaded_trains.forEach((order) => {
+            order.order_date = formatDate(order.order_date);
+          });
+
+          loaded.push({
+            train_details: trip,
+            order_details: loaded_trains,
+          });
+        }
+        if (in_store_details.length != 0) {
+          in_store_details.forEach((order) => {
+            order.order_date = formatDate(order.order_date);
+          });
+
+          in_store.push({
+            train_details: trip,
+            order_details: in_store_details,
+          });
+        }
+      }
+
+      res.render("pages/dashboard_manager.ejs", {
+        loaded,
+        in_store,
+        user_branch_id,
+      });
       break;
     default:
       break;

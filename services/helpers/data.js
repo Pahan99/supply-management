@@ -6,4 +6,12 @@ order_status_list = {
   COMPLETED: "completed",
 };
 
+const getNextStatus = (current_status) => {
+  const values = Object.values(order_status_list);
+  const next_status = values.indexOf(current_status) + 1;
+  if (next_status == values.length) return current_status;
+  return order_status_list[Object.keys(order_status_list)[next_status]];
+};
+
 exports.order_status_list = order_status_list;
+exports.getNextStatus = getNextStatus;

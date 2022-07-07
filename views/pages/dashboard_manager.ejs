@@ -8,33 +8,33 @@
       style="z-index: -1"
     ></div>
     <%- include('../components/navbar.ejs') %>
-    <div class="container-fluid col-10">
+    <div class="container-fluid col-10 content" id="<%= user_branch_id %> ">
       <div class="row mt-4 px-5 trip bg-gray-100 border-radius-lg">
         <nav class="">
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button
               class="nav-link active"
-              id="nav-recieved-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#nav-recieved"
-              type="button"
-              role="tab"
-              aria-controls="nav-recieved"
-              aria-selected="true"
-            >
-              Recieved Items
-            </button>
-            <button
-              class="nav-link"
               id="nav-ontheway-tab"
               data-bs-toggle="tab"
               data-bs-target="#nav-ontheway"
               type="button"
               role="tab"
               aria-controls="nav-ontheway"
-              aria-selected="false"
+              aria-selected="true"
             >
               On the way
+            </button>
+            <button
+              class="nav-link"
+              id="nav-recieved-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#nav-recieved"
+              type="button"
+              role="tab"
+              aria-controls="nav-recieved"
+              aria-selected="false"
+            >
+              Recieved Items
             </button>
             <button
               class="nav-link"
@@ -52,131 +52,40 @@
         </nav>
         <div class="tab-content" id="nav-tabContent">
           <div
-            class="tab-pane fade show active p-2 my-4"
-            id="nav-recieved"
-            role="tabpanel"
-            aria-labelledby="nav-recieved-tab"
-          >
-            <div class="row mt-4 px-5 trip">
-              <% for( let i = 0; i < orders.length; i++ ) { %>
-
-              <div class="my-3 px-3 d-grid accordion" id="trip">
-                <div class="row accordion-item">
-                  <div class="accordion-body col-md-7 col-10">
-                    <h5 class="title route text-dark">
-                      <i class="fa fa-train"></i>&nbsp; <%=
-                      orders[i].start_station %> - <%= orders[i].end_station %>
-                    </h5>
-                    <hr />
-                    <p class="text-sm capacity">
-                      <i class="fa fa-weight"></i>&nbsp;&nbsp;Capacity: 90/100kg
-                    </p>
-                    <p class="text-sm date">
-                      <i class="fa fa-calendar"></i>&nbsp;&nbsp;Date: 22/02/2022
-                    </p>
-                    <p class="text-sm journey-start">
-                      <i class="fa fa-hourglass-start"></i>&nbsp;&nbsp;Journey
-                      Start: Kandy 10.00 a.m
-                    </p>
-                    <p class="text-sm journey-end">
-                      <i class="fa fa-hourglass-end"></i>&nbsp;&nbsp;Journey
-                      End: Colombo 6.00 p.m
-                    </p>
-                    <p class="text-sm address">
-                      <i class="fa fa-map-marker"></i>&nbsp;&nbsp;Location:
-                      Colombo
-                    </p>
-                  </div>
-                  <div
-                    class="buttons col-md-5 col-10 d-flex align-items-end justify-content-end"
-                  >
-                    <!-- change the data-bs-target to the relevent id -->
-                    <button
-                      type="button"
-                      class="btn btn-primary m-2 collapsed"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#recieved-products-1"
-                      aria-expanded="false"
-                      aria-controls="products"
-                    >
-                      View Products
-                    </button>
-                    <a href="#" class="btn btn-outline-danger m-2 disabled"
-                      >Recieved</a
-                    >
-                  </div>
-                  <!-- change below id in each item -->
-                  <div
-                    id="recieved-products-1"
-                    class="accordion-collapse collapse"
-                    aria-labelledby="products-details"
-                    data-bs-parent="#trip"
-                  >
-                    <div class="accordion-body">
-                      <table
-                        class="table table-striped table-hover products-details"
-                      >
-                        <thead>
-                          <tr>
-                            <th scope="col">Product</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Weight</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <% } %>
-            </div>
-          </div>
-
-          <div
             class="tab-pane fade p-2 my-4"
             id="nav-ontheway"
             role="tabpanel"
             aria-labelledby="nav-ontheway-tab"
           >
             <div class="row mt-4 px-5 trip">
-              <div class="my-3 px-3 d-grid accordion" id="trip">
+              <% for( let i = 0; i < loaded.length; i++ ) { %> <%
+              record=loaded[i] %>
+              <div
+                class="my-3 px-3 d-grid accordion"
+                id="<%=record.train_details.trip_id  %>"
+              >
                 <div class="row accordion-item">
                   <div class="accordion-body col-md-7 col-10">
                     <h5 class="title route text-dark">
-                      <i class="fa fa-train"></i>&nbsp; Kandy - Colombo
+                      <i class="fa fa-train"></i>&nbsp; Kandy - <%=
+                      record.train_details.destination %>
                     </h5>
+                    <small><%= record.train_details.train_name %> </small>
                     <hr />
+
                     <p class="text-sm capacity">
-                      <i class="fa fa-weight"></i>&nbsp;&nbsp;Capacity: 90/100kg
+                      <i class="fa fa-weight"></i>&nbsp;&nbsp;Capacity: <%=
+                      record.train_details.occupied %> /<%=
+                      record.train_details.capacity %> kg
                     </p>
                     <p class="text-sm date">
-                      <i class="fa fa-calendar"></i>&nbsp;&nbsp;Date: 22/02/2022
+                      <% date = record.train_details.dep_date%>
+                      <i class="fa fa-calendar"></i>&nbsp;&nbsp;Departure Date:
+                      <%= date %>
                     </p>
                     <p class="text-sm journey-start">
                       <i class="fa fa-hourglass-start"></i>&nbsp;&nbsp;Journey
-                      Start: Kandy 10.00 a.m
-                    </p>
-                    <p class="text-sm journey-end">
-                      <i class="fa fa-hourglass-end"></i>&nbsp;&nbsp;Journey
-                      End: Colombo 6.00 p.m
+                      Start: <%= record.train_details.dep_time %>
                     </p>
                   </div>
                   <div
@@ -193,7 +102,13 @@
                     >
                       View Products
                     </button>
-                    <a href="#" class="btn btn-outline-danger m-2">Confirm</a>
+                    <button
+                      id="<%=record.train_details.trip_id  %>"
+                      type="submit"
+                      class="confirmBtn btn btn-outline-danger m-2"
+                    >
+                      Confirm
+                    </button>
                   </div>
                   <!-- change below id in each item -->
                   <div
@@ -208,88 +123,91 @@
                       >
                         <thead>
                           <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Dispatch Location</th>
-                            <th scope="col">Related Store</th>
                             <th scope="col">Order Date</th>
+                            <th scope="col">Quantity</th>
                             <th scope="col">Weight</th>
                           </tr>
                         </thead>
                         <tbody>
+                          <% for( let i = 0; i < record.order_details.length;
+                          i++ ) { %> <% order = record.order_details[i] %>
+
                           <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
+                            <td class="text-align-center">
+                              <%= order.order_date %>
+                            </td>
+
+                            <td class="text-align-center">
+                              <%= order.quantity %>
+                            </td>
+                            <td class="text-align-center">
+                              <%= order.weight %>
+                            </td>
                           </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
+                          <% } %>
                         </tbody>
                       </table>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div class="my-3 px-3 d-grid accordion" id="trip">
+              <% } %>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade show active p-2 my-4"
+            id="nav-recieved"
+            role="tabpanel"
+            aria-labelledby="nav-recieved-tab"
+          >
+            <div class="row mt-4 px-5 trip">
+              <% for( let i = 0; i < in_store.length; i++ ) { %> <%
+              record=in_store[i] %>
+              <div
+                class="my-3 px-3 d-grid accordion"
+                id="<%=record.train_details.trip_id  %>"
+              >
                 <div class="row accordion-item">
                   <div class="accordion-body col-md-7 col-10">
-                    <h5 class="title route">Kandy - Colombo</h5>
-                    <p class="body-text capacity">Capacity: 90/100kg</p>
-                    <p class="body-text date">Date: 22/02/2022</p>
-                    <p class="body-text journey-start">
-                      Journey Start: Kandy 10.00 a.m
+                    <h5 class="title route text-dark">
+                      <i class="fa fa-train"></i>&nbsp; Kandy - <%=
+                      record.train_details.destination %>
+                    </h5>
+                    <small><%= record.train_details.train_name %> </small>
+                    <hr />
+
+                    <p class="text-sm capacity">
+                      <i class="fa fa-weight"></i>&nbsp;&nbsp;Capacity: <%=
+                      record.train_details.occupied %> /<%=
+                      record.train_details.capacity %> kg
                     </p>
-                    <p class="body-text journey-end">
-                      Journey End: Colombo 6.00 p.m
+                    <p class="text-sm date">
+                      <% date = record.train_details.dep_date%>
+                      <i class="fa fa-calendar"></i>&nbsp;&nbsp;Departure Date:
+                      <%= date %>
+                    </p>
+                    <p class="text-sm journey-start">
+                      <i class="fa fa-hourglass-start"></i>&nbsp;&nbsp;Journey
+                      Start: <%= record.train_details.dep_time %>
                     </p>
                   </div>
                   <div
                     class="buttons col-md-5 col-10 d-flex align-items-end justify-content-end"
                   >
-                    <!-- change the data-bs-target to the relevent id -->
                     <button
                       type="button"
                       class="btn btn-outline-dark m-2 collapsed"
                       data-bs-toggle="collapse"
-                      data-bs-target="#ontheway-products-2"
+                      data-bs-target="#ontheway-products-1"
                       aria-expanded="false"
                       aria-controls="products"
                     >
                       View Products
                     </button>
-                    <a href="#" class="btn btn-outline-danger m-2">Confirm</a>
                   </div>
-                  <!-- change below id in each item -->
+
                   <div
-                    id="ontheway-products-2"
+                    id="ontheway-products-1"
                     class="accordion-collapse collapse"
                     aria-labelledby="products-details"
                     data-bs-parent="#trip"
@@ -300,58 +218,37 @@
                       >
                         <thead>
                           <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Dispatch Location</th>
-                            <th scope="col">Related Store</th>
                             <th scope="col">Order Date</th>
+                            <th scope="col">Quantity</th>
                             <th scope="col">Weight</th>
                           </tr>
                         </thead>
                         <tbody>
+                          <% for( let i = 0; i < record.order_details.length;
+                          i++ ) { %> <% order = record.order_details[i] %>
+
                           <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
+                            <td class="text-align-center">
+                              <%= order.order_date %>
+                            </td>
+
+                            <td class="text-align-center">
+                              <%= order.quantity %>
+                            </td>
+                            <td class="text-align-center">
+                              <%= order.weight %>
+                            </td>
                           </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
+                          <% } %>
                         </tbody>
                       </table>
                     </div>
                   </div>
                 </div>
               </div>
+              <% } %>
             </div>
           </div>
-
           <div
             class="tab-pane fade p-2 my-4"
             id="nav-schedule"
@@ -510,5 +407,7 @@
       </div>
     </div>
     <%- include('../components/js-scripts.ejs') %>
+    <script src="../assets/js/confirm-train.js"></script>
+    <script src="../assets/js/load-trips.js"></script>
   </body>
 </html>
