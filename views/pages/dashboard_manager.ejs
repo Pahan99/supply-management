@@ -8,8 +8,8 @@
       style="z-index: -1"
     ></div>
     <%- include('../components/navbar.ejs') %>
-    <div class="container-fluid col-10 content" id="<%= user_branch_id %> ">
-      <div class="row mt-4 px-5 trip bg-gray-100 border-radius-lg">
+    <div class="container-fluid col-10">
+      <div class="row mt-4 px-5 bg-gray-100 border-radius-lg">
         <nav class="">
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button
@@ -57,9 +57,8 @@
             role="tabpanel"
             aria-labelledby="nav-ontheway-tab"
           >
-            <div class="row mt-4 px-5 trip">
-              <% for( let i = 0; i < loaded.length; i++ ) { %> <%
-              record=loaded[i] %>
+            <div class="row mt-4 px-5 loadedTrips">
+              <% for( let i = 0; i < 0; i++ ) { %> <% record=loaded[i] %>
               <div
                 class="my-3 px-3 d-grid accordion"
                 id="<%=record.train_details.trip_id  %>"

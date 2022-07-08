@@ -5,6 +5,12 @@ order_status_list = {
   LOADED_TRUCK: "loaded_truck",
   COMPLETED: "completed",
 };
+roles = {
+  SUPERVISOR: "Supervisor",
+  DRIVER: "Truck Driver",
+  DRIVER_ASSISTANT: "Truck Driver Assistant",
+  MANAGER: "Manager",
+};
 
 const getNextStatus = (current_status) => {
   const values = Object.values(order_status_list);
@@ -15,3 +21,4 @@ const getNextStatus = (current_status) => {
 
 exports.order_status_list = order_status_list;
 exports.getNextStatus = getNextStatus;
+exports.roles = roles;

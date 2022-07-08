@@ -3,6 +3,7 @@ const userServices = require("../services/userServices");
 const trainServices = require("../services/trainServices");
 
 const { order_status_list } = require("../services/helpers/data");
+const { roles } = require("../services/helpers/data");
 
 const viewHome = (req, res) => {
   res.render("pages/login.ejs");
@@ -13,13 +14,6 @@ const viewDashboard = async (req, res) => {
 
   const user_role = await userServices.findRole(user_id);
   const user_branch_id = await userServices.findBranch(user_id);
-  // console.log(user_branch_id);
-  roles = {
-    SUPERVISOR: "Supervisor",
-    DRIVER: "Truck Driver",
-    DRIVER_ASSISTANT: "Truck Driver Assistant",
-    MANAGER: "Manager",
-  };
 
   await trainServices.makePartitions();
   switch (user_role) {
