@@ -8,90 +8,98 @@ let received = false;
 $("#nav-recieved-tab").on("click", async function () {
   if (!received) {
     received = true;
+    $trips = $(".received");
+    let type = "received";
+    await loadTripDetails(type, $trips);
   }
 });
 
 $("#nav-ontheway-tab").on("click", async function () {
   if (!on_the_way) {
     on_the_way = true;
-    const trips = await axios.get("/trains/trips/");
-    const train_trips = trips.data;
-    console.log(train_trips);
     $trips = $(".loadedTrips");
-
-    for (let i = 0; i < train_trips.length; i++) {
-      let trip = train_trips[i];
-
-      let element_id = "#trip" + trip.trip_id;
-      // let inner =
-      $trips.append(
-        `<div class="my-3 px-3 d-grid accordion" id="trip${trip.trip_id}"></div>`
-      );
-      $(element_id).append(`<div class="row accordion-item">
-      <div class="accordion-body col-md-7 col-10">
-      <h5 class="title route text-dark"><i class="fa fa-train"></i>&nbsp;Kandy - ${
-        trip.destination
-      }</h5> 
-      <small>${trip.train_name}</small><hr/>
-      <p class="text-sm capacity">
-      <i class="fa fa-weight"></i>&nbsp;&nbsp;Capacity: ${trip.occupied}  / ${
-        trip.capacity
-      } kg
-    </p>
-    <p class="text-sm date">
-      <i class="fa fa-calendar"></i>&nbsp;&nbsp;Departure Date:
-      ${formatDate(trip.dep_date)}
-    </p>
-    <p class="text-sm journey-start">
-      <i class="fa fa-clock"></i>&nbsp;&nbsp;Journey
-      Start: ${formatTime(trip.dep_time)}
-    </p>                    
-    </div>
-    <div
-      class="buttons col-md-5 col-10 d-flex align-items-end justify-content-end"
-    >
-      <button
-        type="button"
-        class="btn btn-dark m-2 collapsed viewProducts"
-        data-bs-toggle="collapse"
-        data-bs-target="#ontheway-products-${trip.trip_id}"
-        aria-expanded="false"
-        aria-controls="products${trip.trip_id}"
-        id=${trip.trip_id}
-      >
-        View Products
-      </button>
-      <button
-        id=${trip.trip_id}
-        class="confirmBtn btn btn-danger m-2"
-      >
-        Confirm
-      </button>
-    </div>
-    <div
-      id="ontheway-products-${trip.trip_id}"
-      class="accordion-collapse collapse"
-      aria-labelledby="products-details"
-      data-bs-parent="#trip${trip.trip_id}"
-    >
-    </div>
-    </div>`);
-    }
-
-    $viewProd = $(".viewProducts");
-    let loaded = false;
-    $viewProd.click(async function () {
-      if (loaded) return;
-      loaded = true;
-      await loadOrders($viewProd.attr("id"), "loaded_train");
-    });
+    let type = "ontheway";
+    await loadTripDetails(type, $trips);
   }
 });
 
-async function loadOrders(trip_id, status) {
+async function loadTripDetails(type, trips) {
+  const train_trips = await loadTrips();
+  for (let i = 0; i < train_trips.length; i++) {
+    let trip = train_trips[i];
+
+    let element_id = "#trip" + trip.trip_id;
+    trips.append(
+      `<div class="my-3 px-3 d-grid accordion" id="trip${trip.trip_id}"></div>`
+    );
+
+    $(element_id).append(`
+    <div class="row accordion-item">
+    <div class="accordion-body col-md-7 col-10">
+    <h5 class="title route text-dark"><i class="fa fa-train"></i>&nbsp;Kandy - ${
+      trip.destination
+    }
+    </h5> 
+    <small>${trip.train_name}</small>
+    <hr/>
+    <p class="text-sm capacity">
+      <i class="fa fa-weight"></i>&nbsp;&nbsp;Capacity: ${trip.occupied}  / ${
+      trip.capacity
+    } kg
+  </p>
+  <p class="text-sm date">
+    <i class="fa fa-calendar"></i>&nbsp;&nbsp;Departure Date:
+    ${formatDate(trip.dep_date)}
+  </p>
+  <p class="text-sm journey-start">
+    <i class="fa fa-clock"></i>&nbsp;&nbsp;Journey
+    Start: ${formatTime(trip.dep_time)}
+  </p>                    
+  </div>
+  <div
+    class="buttons col-md-5 col-10 d-flex align-items-end justify-content-end"
+  >
+    <button
+      type="button"
+      class="btn btn-dark m-2 collapsed viewProducts"
+      data-bs-toggle="collapse"
+      data-bs-target="#${type}-products-${trip.trip_id}"
+      aria-expanded="false"
+      aria-controls="products${trip.trip_id}"
+      id="${trip.trip_id}"
+    >
+      View Products
+    </button>
+    <button
+      id="${trip.trip_id}"
+      class="confirmBtn btn btn-danger m-2"
+    >
+      Confirm
+    </button>
+  </div>
+  <div
+    id="${type}-products-${trip.trip_id}"
+    class="accordion-collapse collapse"
+    aria-labelledby="products-details"
+    data-bs-parent="#trip${trip.trip_id}"
+  >
+  </div>
+  </div>`);
+  }
+
+  $viewProd = $(".viewProducts");
+  let loaded = false;
+  $viewProd.click(async function () {
+    if (loaded) return;
+    loaded = true;
+    await loadOrders($viewProd.attr("id"), "loaded_train", type);
+  });
+}
+
+async function loadOrders(trip_id, status, type) {
   const orders = await axios.get(`trains/trip-details/${trip_id}/${status}`);
   if (orders.data.length > 0) {
-    $orders = $(`#ontheway-products-${trip_id}`);
+    $orders = $(`#${type}-products-${trip_id}`);
     $orders.append(`
     <div class="accordion-body">
     <table
@@ -126,6 +134,12 @@ async function loadOrders(trip_id, status) {
   }
 }
 
+async function loadTrips() {
+  const trips = await axios.get("/trains/trips/");
+  const train_trips = trips.data;
+  // console.log(train_trips);
+  return train_trips;
+}
 // loadOrders($(this).attr("id"))
 
 function formatDate(date) {

@@ -1,38 +1,38 @@
 const { db } = require("../../database/db-config");
 const { order_status_list } = require("../helpers/data");
 
-const get_orders = async(branch_id) => {
-    const order_list = await db.query(
-        "SELECT * FROM orders LEFT JOIN routes USING(route_id) WHERE branch_id = ? AND status_id = (SELECT status_id FROM order_status where status=?) ORDER BY order_date",
-        [branch_id, order_status_list.IN_STORE],
-        //"SELECT * FROM trucks t LEFT JOIN routes r USING(branch_id) LEFT JOIN orders o USING(route_id) LEFT JOIN order_details od USING(order_id) WHERE o.order_id=? AND t.availability = 1 AND t.branch_id = 1 AND od.truck_order_partition_id IS NULL ORDER BY order_date"
-    );
-    // console.log(order_list[0])
-    return order_list[0];
+const get_orders = async (branch_id) => {
+  const order_list = await db.query(
+    "SELECT * FROM orders LEFT JOIN routes USING(route_id) WHERE branch_id = ? AND status_id = (SELECT status_id FROM order_status where status=?) ORDER BY order_date",
+    [branch_id, order_status_list.IN_STORE]
+    //"SELECT * FROM trucks t LEFT JOIN routes r USING(branch_id) LEFT JOIN orders o USING(route_id) LEFT JOIN order_details od USING(order_id) WHERE o.order_id=? AND t.availability = 1 AND t.branch_id = 1 AND od.truck_order_partition_id IS NULL ORDER BY order_date"
+  );
+  // console.log(order_list[0])
+  return order_list[0];
 };
 
-const get_orders_products = async(order_id) => {
-    const sql = 
-        "SELECT order_id, product_id, quantity*unit_weight as product_weight FROM order_details od LEFT JOIN products USING(product_id) WHERE (order_id=? AND train_order_partition_id IS NULL) ORDER BY product_weight DESC";
-    product_weights = await db.query(sql, [order_id]);
-    console.log(product_weights[0]);
-    return product_weights[0];
+const get_orders_products = async (order_id) => {
+  const sql =
+    "SELECT order_id, product_id, quantity*unit_weight as product_weight FROM order_details od LEFT JOIN products USING(product_id) WHERE (order_id=? AND train_order_partition_id IS NULL) ORDER BY product_weight DESC";
+  product_weights = await db.query(sql, [order_id]);
+  console.log(product_weights[0]);
+  return product_weights[0];
 };
 
-const get_truck_details = async(branch_id=1) => {
-    sql = 
-        "SELECT * FROM truck_deliveries LEFT JOIN trucks USING(truck_id) where branch_id = ? ORDER BY capacity_free DESC";
-    const result = await db.query(sql, [branch_id]);
-    
-    // console.log(result[0])
-    return result[0];
-}
+const get_truck_details = async (branch_id = 1) => {
+  sql =
+    "SELECT * FROM truck_deliveries LEFT JOIN trucks USING(truck_id) where branch_id = ? ORDER BY capacity_free DESC";
+  const result = await db.query(sql, [branch_id]);
+
+  // console.log(result[0])
+  return result[0];
+};
 
 // get_truck_details();
-const update_truck_partitions = async(partitions) => {
+const update_truck_partitions = async (partitions) => {
   for (let i = 0; i < partitions.length; i++) {
     const partition = partitions[i];
-    try{
+    try {
       await db.query("START TRANSACTION");
       await db.query(
         "INSERT INTO truck_order_partitions (order_id,status_id) VALUES (?,?)",
@@ -43,15 +43,15 @@ const update_truck_partitions = async(partitions) => {
       );
 
       const p_id = truck_order_partition_id[0][0].truck_order_partition_id;
-      // await db.query("INSERT INTO truck_delivery_details  VALUES (?,?)", [
-      //   p_id,
-      //   partition.delivery_id,
-      // ]);
-      // console.log(p_id);
-      await db.query("UPDATE truck_deliveries SET capacity_free=? WHERE trip_id=?", [
-        partition.trip_weight,
+      await db.query("INSERT INTO delivery_details  VALUES (?,?)", [
+        p_id,
         partition.delivery_id,
       ]);
+      // console.log(p_id);
+      await db.query(
+        "UPDATE truck_deliveries SET capacity_free=? WHERE delivery_id=?",
+        [partition.trip_weight, partition.delivery_id]
+      );
       for (let i = 0; i < partition.products.length; i++) {
         const product = partition.products[i];
         await db.query(
@@ -66,7 +66,7 @@ const update_truck_partitions = async(partitions) => {
       await db.query("ROLLBACK");
     }
   }
-}
+};
 
 const add_truck_deliveries = async (branch_id) => {
   const truck_id_detail = await db.query(
@@ -112,7 +112,7 @@ const make_partitions = async () => {
         }
       }
       // console.log(trucks)
-      
+
       const min_weight = product_list[product_list.length - 1].product_weight;
 
       for (let i = 0; i < trucks.length; i++) {
@@ -124,7 +124,7 @@ const make_partitions = async () => {
           status_id: status_id,
           // route_id: route_id,
           delivery_id: truck.delivery_id,
-          
+
           trip_weight: truck.capacity_free,
           products: [],
         };
@@ -164,4 +164,5 @@ const make_partitions = async () => {
   process.exit();
 };
 
-exports.make_partitions = make_partitions;
+// exports.make_partitions = make_partitions;
+make_partitions();
