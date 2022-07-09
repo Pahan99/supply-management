@@ -1,7 +1,11 @@
-async function confirm(attr) {
-  const trip_id = attr;
+async function confirm(id) {
+  const trip_id = id;
   await axios.post("/trains/confirm-train/" + trip_id);
-  location.replace("/dashboard");
+  let trip = "#trip" + id;
+  $tr = $(trip);
+  $tr.hide();
+
+  // location.replace("/dashboard");
 }
 
 // confirm();

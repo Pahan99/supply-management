@@ -2,26 +2,23 @@ const orderServices = require("../services/orderServices");
 const userServices = require("../services/userServices");
 const trainServices = require("../services/trainServices");
 
+const { order_status_list } = require("../services/helpers/data");
+const { roles } = require("../services/helpers/data");
+
 const viewHome = (req, res) => {
   res.render("pages/login.ejs");
 };
 
 const viewDashboard = async (req, res) => {
   const user_id = req.cookies.id;
-  // const orders = await orderServices.getOrderDetails();
-  const user_role = await userServices.findRole(user_id);
-  // console.log(orders);
-  roles = {
-    SUPERVISOR: "Supervisor",
-    DRIVER: "Truck Driver",
-    DRIVER_ASSISTANT: "Truck Driver Assistant",
-    MANAGER: "Manager",
-  };
 
+  const user_role = await userServices.findRole(user_id);
+  const user_branch_id = await userServices.findBranch(user_id);
+
+  await trainServices.makePartitions();
   switch (user_role) {
     case roles.SUPERVISOR: {
       // res.render("pages/dashboard_supervisor.ejs");
-      await trainServices.makePartitions();
 
       const trips = await trainServices.getTrainTrips();
 
@@ -29,13 +26,15 @@ const viewDashboard = async (req, res) => {
       // console.log(partitions);
       for (let i = 0; i < trips.length; i++) {
         const trip = trips[i];
-        trip.dep_date = formatDate(trip.dep_date);
+        trip.dep_date = trip.dep_date;
+
         const trip_orders = await trainServices.getTrainTripDetails(
-          trip.trip_id
+          trip.trip_id,
+          order_status_list.NOT_LOADED_TRAIN
         );
         if (trip_orders.length == 0) continue;
         trip_orders.forEach((order) => {
-          order.order_date = formatDate(order.order_date);
+          order.order_date = order.order_dates;
         });
         records.push({
           train_details: trip,
@@ -43,7 +42,7 @@ const viewDashboard = async (req, res) => {
         });
       }
 
-      console.log(records[1]);
+      // console.log(records[1]);
       res.render("pages/dashboard_supervisor.ejs", { records });
       break;
     }
@@ -54,8 +53,7 @@ const viewDashboard = async (req, res) => {
       res.render("pages/dashboard_assistant.ejs");
       break;
     case roles.MANAGER:
-      // res.send("Manager");
-      res.render("pages/dashboard_manager.ejs", { orders: [] });
+      res.render("pages/dashboard_manager.ejs");
       break;
     default:
       break;
@@ -67,32 +65,6 @@ function get_order_ids(orders) {
   order_details.forEach((order_detail) => {
     console.log(order_detail.order_id);
   });
-}
-
-function formatDate(date) {
-  let day = new Date(date);
-  const yyyy = day.getFullYear();
-  let mm = day.getMonth() + 1; // Months start at 0!
-  let dd = day.getDate();
-
-  if (dd < 10) dd = "0" + dd;
-  if (mm < 10) mm = "0" + mm;
-
-  day = yyyy + "-" + mm + "-" + dd;
-  return day;
-}
-
-function formatTime(time) {
-  // let time
-  // var hours = time.getHours();
-  // var minutes = time.getMinutes();
-  // var ampm = hours >= 12 ? "pm" : "am";
-  // hours = hours % 12;
-  // hours = hours ? hours : 12; // the hour '0' should be '12'
-  // minutes = minutes < 10 ? "0" + minutes : minutes;
-  // var strTime = hours + ":" + minutes + " " + ampm;
-  // console.log(strTime);
-  // return strTime;
 }
 
 module.exports = {

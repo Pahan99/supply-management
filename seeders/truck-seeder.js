@@ -28,7 +28,7 @@ trucks = [
   {
     truck_id: 5,
     vehicle_no: "LM - 5547",
-    capacity: 1000,
+    capacity: 600,
     branch_id: 4,
   },
   {
