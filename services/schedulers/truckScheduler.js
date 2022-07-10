@@ -15,7 +15,7 @@ const get_orders_products = async (order_id) => {
   const sql =
     "SELECT order_id, product_id, quantity*unit_weight as product_weight FROM order_details od LEFT JOIN products USING(product_id) WHERE (order_id=? AND train_order_partition_id IS NULL) ORDER BY product_weight DESC";
   product_weights = await db.query(sql, [order_id]);
-  console.log(product_weights[0]);
+  // console.log(product_weights[0]);
   return product_weights[0];
 };
 
@@ -49,8 +49,8 @@ const update_truck_partitions = async (partitions) => {
       ]);
       // console.log(p_id);
       await db.query(
-        "UPDATE truck_deliveries SET capacity_free=? WHERE delivery_id=?",
-        [partition.trip_weight, partition.delivery_id]
+        "UPDATE truck_deliveries SET capacity_free=?,route_id=? WHERE delivery_id=?",
+        [partition.trip_weight, partition.route_id, partition.delivery_id]
       );
       for (let i = 0; i < partition.products.length; i++) {
         const product = partition.products[i];
@@ -62,7 +62,7 @@ const update_truck_partitions = async (partitions) => {
       // continue;
       await db.query("COMMIT");
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       await db.query("ROLLBACK");
     }
   }
@@ -100,7 +100,7 @@ const make_partitions = async () => {
       // console.log(missed);
       if (missed[order_id] == null) missed[order_id] = [];
       const status_id = orders[i].status_id;
-      // const route_id = orders[i].route_id;
+      const route_id = orders[i].route_id;
 
       const product_list = await get_orders_products(order_id);
       if (product_list.length == 0) continue;
@@ -118,11 +118,11 @@ const make_partitions = async () => {
       for (let i = 0; i < trucks.length; i++) {
         if (missed[order_id].length == 0) continue;
         let truck = trucks[i];
-
+        console.log(truck);
         const partition = {
           order_id: order_id,
           status_id: status_id,
-          // route_id: route_id,
+          route_id: route_id,
           delivery_id: truck.delivery_id,
 
           trip_weight: truck.capacity_free,
@@ -135,6 +135,7 @@ const make_partitions = async () => {
           if (Number(truck.capacity_free) < min_weight) break;
           if (Number(truck.capacity_free) < Number(detail.product_weight))
             continue;
+
           if (!missed[order_id].includes(detail.product_id)) continue;
           // console.log(detail);
           truck.capacity_free -= detail.product_weight;
