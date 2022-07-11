@@ -119,6 +119,7 @@ const make_partitions = async () => {
         if (missed[order_id].length == 0) continue;
         let truck = trucks[i];
         console.log(truck);
+
         const partition = {
           order_id: order_id,
           status_id: status_id,
@@ -129,6 +130,8 @@ const make_partitions = async () => {
           products: [],
         };
 
+        if (truck?.route_id != route_id) continue;
+
         for (let j = 0; j < product_list.length; j++) {
           const detail = product_list[j];
 
@@ -137,6 +140,7 @@ const make_partitions = async () => {
             continue;
 
           if (!missed[order_id].includes(detail.product_id)) continue;
+
           // console.log(detail);
           truck.capacity_free -= detail.product_weight;
           partition.trip_weight = truck.capacity_free;
