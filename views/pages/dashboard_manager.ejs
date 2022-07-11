@@ -75,24 +75,32 @@
             role="tabpanel"
             aria-labelledby="nav-schedule-tab"
           >
-            <div class="row mt-4 px-5 trip">
+          
+          <% if (data.length==0) { %>
+            <div class="row mt-4 px-5 py-4 border-radius-lg z-index-4 mt-300">
+              <h3>No Scheduled Trucks currently...</h3>
+            </div>
+          <% } %> 
+            <% for( let i = 0; i < data.length; i++ ) {%>
+                <% sect = data[i] %>
+            <div class="row mt-4 px-5 trip<%=i%>">
               <div class="my-3 px-3 d-grid accordion" id="trip">
                 <div class="row accordion-item">
                   <div class="accordion-body col-md-7 col-10">
                     <h5 class="title route">
-                      <i class="fa fa-road"></i>&nbsp;&nbsp;Route ID #0098
-                      Colombo-Panadura
+                      <i class="fa fa-road"></i>&nbsp;&nbsp;Route ID : <%=sect[0][0] %> |
+                      <%= sect[0][1]%>
                     </h5>
                     <hr />
                     <p class="body-text truck">
-                      <i class="fa fa-truck"></i>&nbsp;&nbsp;Truck ID: #006
+                      <i class="fa fa-truck"></i>&nbsp;&nbsp;Truck ID: <%= sect[0][2] %>
                     </p>
                     <p class="body-text truck-number">
-                      <i class="fa fa-id-card"></i>&nbsp;&nbsp;Truck No: LM2639
+                      <i class="fa fa-id-card"></i>&nbsp;&nbsp;Truck No: <%= sect[0][3] %>
                     </p>
                     <p class="body-text num-orders">
                       <i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Number of
-                      orders: 33
+                      orders: <%= sect.length-1 %>
                     </p>
                     <hr />
                     <select
@@ -126,7 +134,7 @@
                       type="button"
                       class="btn btn-dark m-2 collapsed"
                       data-bs-toggle="collapse"
-                      data-bs-target="#schedule-orders-1"
+                      data-bs-target="#schedule-orders-<%=i%>"
                       aria-expanded="false"
                       aria-controls="products"
                     >
@@ -136,7 +144,7 @@
                   </div>
                   <!-- change below id in each item -->
                   <div
-                    id="schedule-orders-1"
+                    id="schedule-orders-<%=i%>"
                     class="accordion-collapse collapse"
                     aria-labelledby="products-details"
                     data-bs-parent="#trip"
@@ -151,25 +159,25 @@
                               scope="col"
                               class="text-uppercase text-secondary text-sm font-weight-bolder opacity-100"
                             >
-                              Date
-                            </th>
-                            <th
-                              scope="col"
-                              class="text-uppercase text-secondary text-sm font-weight-bolder opacity-100"
-                            >
-                              Dispatch Location
-                            </th>
-                            <th
-                              scope="col"
-                              class="text-uppercase text-secondary text-sm font-weight-bolder opacity-100"
-                            >
-                              Related Store
-                            </th>
-                            <th
-                              scope="col"
-                              class="text-uppercase text-secondary text-sm font-weight-bolder opacity-100"
-                            >
                               Order Date
+                            </th>
+                            <th
+                              scope="col"
+                              class="text-uppercase text-secondary text-sm font-weight-bolder opacity-100"
+                            >
+                              Delivery Date
+                            </th>
+                            <th
+                              scope="col"
+                              class="text-uppercase text-secondary text-sm font-weight-bolder opacity-100"
+                            >
+                              Product
+                            </th>
+                            <th
+                              scope="col"
+                              class="text-uppercase text-secondary text-sm font-weight-bolder opacity-100"
+                            >
+                              Quantity
                             </th>
                             <th
                               scope="col"
@@ -177,44 +185,26 @@
                             >
                               Weight
                             </th>
+                            <th
+                              scope="col"
+                              class="text-uppercase text-secondary text-sm font-weight-bolder opacity-100"
+                            >
+                              Dispatch Location
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
+                          <% for( let j = 1; j < sect.length; j++ ) { %>
+                            <% order = sect[j] %>
                           <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
+                            <td><%= order.order_date %></td>
+                            <td><%= order.delivery_date %></td>
+                            <td><%= order.product_name %></td>
+                            <td><%= order.quantity %></td>
+                            <td><%= order.tot_weight %></td>
+                            <td><%= order.address %></td>
                           </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
-                          <tr>
-                            <td>22/02/2022</td>
-                            <td>Temple Road, colombo</td>
-                            <td>colombo</td>
-                            <td>01/03/2022</td>
-                            <td>50kg</td>
-                          </tr>
+                          <% } %>
                         </tbody>
                       </table>
                     </div>
@@ -222,6 +212,7 @@
                 </div>
               </div>
             </div>
+            <% } %>
           </div>
         </div>
       </div>

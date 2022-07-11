@@ -130,7 +130,7 @@ const make_partitions = async () => {
           products: [],
         };
 
-        if (truck?.route_id != route_id) continue;
+        // if (truck?.route_id != route_id) continue;
 
         for (let j = 0; j < product_list.length; j++) {
           const detail = product_list[j];

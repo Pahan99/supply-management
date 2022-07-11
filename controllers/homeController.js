@@ -1,6 +1,8 @@
 const orderServices = require("../services/orderServices");
 const userServices = require("../services/userServices");
 const trainServices = require("../services/trainServices");
+const truckServices = require("../services/truckServices");
+const timeFormat = require("../services/helpers/timeFormat")
 
 const { order_status_list } = require("../services/helpers/data");
 const { roles } = require("../services/helpers/data");
@@ -53,7 +55,28 @@ const viewDashboard = async (req, res) => {
       res.render("pages/dashboard_assistant.ejs");
       break;
     case roles.MANAGER:
-      res.render("pages/dashboard_manager.ejs");
+      const routes = await truckServices.getRouteswithOrders(user_branch_id);
+      const data = [];
+      for (let i = 0; i < routes.length; i++) {
+        const delivery_IDs = await truckServices.getDeliveryID(routes[i].route_id);
+        for (let j = 0; j < delivery_IDs.length; j++) {
+            const sect = [];
+            const truckData = await truckServices.getTruckData(delivery_IDs[j].delivery_id);
+            const truckdetails = [routes[i].route_id, routes[i].route_name, truckData[0].truck_id, truckData[0].vehicle_no];
+            const viewData = await truckServices.getViewOrdersData(delivery_IDs[j].delivery_id);
+            for (let k = 0; k < viewData.length; k++) {
+              viewData[k].order_date = timeFormat.formatTime(viewData[k].order_date).slice(0,15);
+              viewData[k].delivery_date = timeFormat.formatTime(viewData[k].delivery_date).slice(0,15);
+            }
+            sect.push(truckdetails);
+            for (let k = 0; k < viewData.length; k++) {
+              sect.push(viewData[k]);
+            }
+            data.push(sect);
+        }   
+      }
+      //console.log(data);
+      res.render("pages/dashboard_manager.ejs",{data});
       break;
     default:
       break;
