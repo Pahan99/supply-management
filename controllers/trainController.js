@@ -4,7 +4,11 @@ const userServices = require("../services/userServices");
 
 const confirmTrip = async (req, res) => {
   const trip_id = req.params.id;
-  await trainServices.updateTrainOrderPartitions(trip_id);
+  const role = await userServices.findRole(req.cookies.id);
+  await trainServices.updateTrainOrderPartitions(
+    trip_id,
+    role != roles.SUPERVISOR
+  );
   res.redirect("/dashboard");
 };
 

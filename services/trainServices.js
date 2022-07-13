@@ -13,11 +13,16 @@ const getAllOrdersFromFactory = async () => {
   return db.query(sql, [order_status_list.NOT_LOADED_TRAIN]);
 };
 
-const updateTrainOrderPartitions = async (trip_id) => {
+const updateTrainOrderPartitions = async (trip_id, update) => {
   const current_status = await db.query(
     "SELECT (SELECT status FROM order_status WHERE status_id=tp.status_id) AS status FROM train_order_partitions tp  WHERE train_order_partition_id IN (SELECT train_order_partition_id FROM train_trip_details WHERE trip_id=?)",
     [trip_id]
   );
+  if (update)
+    await db.query(
+      "UPDATE train_trips SET completed=IF(completed=FALSE,TRUE,FALSE) WHERE trip_id=?",
+      [trip_id]
+    );
 
   const next_status = getNextStatus(current_status[0][0].status);
   await db.query(
@@ -60,13 +65,13 @@ const getTrainTripDetailsByBranch = async (trip_id, status, branch_id) => {
 
 const getTrainTrips = async () => {
   const sql =
-    "SELECT trip_id,train_name,t.departure as dep_time,tt.departure as dep_date,ROUND(capacity-capacity_free,0) AS occupied,capacity,destination FROM train_trips tt LEFT JOIN trains t USING(train_id) WHERE trip_id IN (SELECT DISTINCT trip_id FROM train_trip_details)";
+    "SELECT trip_id,train_name,t.departure as dep_time,tt.departure as dep_date,ROUND(capacity-capacity_free,0) AS occupied,capacity,destination FROM train_trips tt LEFT JOIN trains t USING(train_id) WHERE trip_id IN (SELECT DISTINCT trip_id FROM train_trip_details) AND completed=FALSE";
   const result = await db.query(sql);
   return result[0];
 };
 const getTrainTripsByBranch = async (branch_id) => {
   const sql =
-    "SELECT trip_id,train_name,t.departure as dep_time,tt.departure as dep_date,ROUND(capacity-capacity_free,0) AS occupied,capacity,destination FROM train_trips tt LEFT JOIN trains t USING(train_id) WHERE trip_id IN (SELECT DISTINCT trip_id FROM train_trip_details) AND (train_id IN (SELECT train_id FROM train_branches WHERE branch_id=?))";
+    "SELECT completed,trip_id,train_name,t.departure as dep_time,tt.departure as dep_date,ROUND(capacity-capacity_free,0) AS occupied,capacity,destination FROM train_trips tt LEFT JOIN trains t USING(train_id) WHERE trip_id IN (SELECT DISTINCT trip_id FROM train_trip_details) AND (train_id IN (SELECT train_id FROM train_branches WHERE branch_id=?))";
   const result = await db.query(sql, [branch_id]);
   return result[0];
 };
