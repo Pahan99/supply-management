@@ -21,17 +21,29 @@
 
     <div class="row ms-auto mt-4 px-4 justify-content-start z-index-1">
       <div class="form-check form-switch col-10">
-        <input class="form-check-input" type="checkbox" id="set-availability" />
-        <label
-          class="form-check-label font-weight-bolder"
-          for="set-availability"
-          >Available</label
-        >
+        <input class="form-check-input" type="checkbox" id="set-availability" onclick="toggle()"/>
+        <label id="text1" style="display:none;" class="form-check-label font-weight-bolder z-index-0" for="set-availability" >Available</label>
+        <label id="text2" style="display:none;" class="form-check-label font-weight-bolder z-index-0" for="set-availability" >Unavailable</label>
+
       </div>
+      <script>
+        function toggle(){
+          var checkBox = document.getElementById("set-availability");
+          var text1 = document.getElementById("text1");
+          var text2 = document.getElementById("text2");
+          if (checkBox.checked == true){
+            text1.style.display = "block";
+            text2.style.display = "none";
+          } else {
+            text1.style.display = "none";
+            text2.style.display = "block";
+          }
+        }
+      </script>
     </div>
 
     <div class="row mt-4 px-4">
-      <h6 class="lead route-id">Route ID#</h6>
+      <h6 class="lead route-id z-index-1">Route ID#</h6>
     </div>
 
     <div class="row mt-4 px-5 orders">
