@@ -52,6 +52,12 @@ const updateTruckOrderPartition = async () => {
   return result[0];
 };
 
+const getTruckDeliveriesByDriver = async (driver_id) => {
+  const sql = "";
+  const result = await db.execute(sql);
+  return result[0];
+};
+
 const makePartitions = async () => {
   await make_partitions();
 };
@@ -66,4 +72,5 @@ module.exports = {
   updateTruckOrderPartition,
   makePartitions,
   getAllTruckOrderPartitions,
+  getTruckDeliveriesByDriver
 };

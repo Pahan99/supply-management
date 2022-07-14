@@ -131,7 +131,26 @@ const viewDashboard = async (req, res) => {
       res.render("pages/dashboard_manager.ejs", { loaded, in_store, data });
       break;
     case roles.DRIVER:
-      res.render("pages/dashboard_driver.ejs");
+      // const del = await truckServices.getTruckDeliveriesByDriver(user_id);
+      // let del_id = del.delivery_id;
+      
+
+      const records = {
+        route_name: "Route A",
+        order_details: [
+          {
+            order_id: 10,
+            customer: "Customer A",
+            products: [],
+          },
+          {
+            order_id: 11,
+            customer: "Customer B",
+            products: [],
+          },
+        ],
+      };
+      res.render("pages/dashboard_driver.ejs", { records });
       break;
     case roles.DRIVER_ASSISTANT:
       res.render("pages/dashboard_assistant.ejs");

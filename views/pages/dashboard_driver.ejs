@@ -21,17 +21,33 @@
 
     <div class="row ms-auto mt-4 px-4 justify-content-start z-index-1">
       <div class="form-check form-switch col-10">
-        <input class="form-check-input" type="checkbox" id="set-availability" onclick="toggle()"/>
-        <label id="text1" style="display:none;" class="form-check-label font-weight-bolder z-index-0" for="set-availability" >Available</label>
-        <label id="text2" style="display:none;" class="form-check-label font-weight-bolder z-index-0" for="set-availability" >Unavailable</label>
-
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="set-availability"
+          onclick="toggle()"
+        />
+        <label
+          id="text1"
+          style="display: none"
+          class="form-check-label font-weight-bolder z-index-0"
+          for="set-availability"
+          >Available</label
+        >
+        <label
+          id="text2"
+          style="display: none"
+          class="form-check-label font-weight-bolder z-index-0"
+          for="set-availability"
+          >Unavailable</label
+        >
       </div>
       <script>
-        function toggle(){
+        function toggle() {
           var checkBox = document.getElementById("set-availability");
           var text1 = document.getElementById("text1");
           var text2 = document.getElementById("text2");
-          if (checkBox.checked == true){
+          if (checkBox.checked == true) {
             text1.style.display = "block";
             text2.style.display = "none";
           } else {
@@ -43,25 +59,23 @@
     </div>
 
     <div class="row mt-4 px-4">
-      <h6 class="lead route-id z-index-1">Route ID#</h6>
+      <h6 class="lead route-id z-index-1 text-white">
+        Route : <%= records.route_name %>
+      </h6>
     </div>
 
     <div class="row mt-4 px-5 orders">
+      <% for( let i = 0; i < records.order_details.length; i++ ) { %> <% order =
+      records.order_details[i] %>
       <div class="card my-3 bg-gray-100">
         <div class="card-body">
-          <h5 class="title">Order ID#</h5>
+          <h5 class="title">Order ID# <%= order.order_id %></h5>
+          <p class="card-text">Customer Name : <%= order.customer %></p>
           <p class="card-text">Address: Lorem ipsum dolor sit amet.</p>
           <a href="#" class="btn btn-outline-danger">Confirm</a>
         </div>
       </div>
-
-      <div class="card my-3 bg-gray-100">
-        <div class="card-body">
-          <h5 class="title">Order ID#</h5>
-          <p class="card-text">Address: Lorem ipsum dolor sit amet.</p>
-          <a href="#" class="btn btn-outline-danger">Confirm</a>
-        </div>
-      </div>
+      <% } %>
     </div>
 
     <%- include('../components/js-scripts.ejs') %>
