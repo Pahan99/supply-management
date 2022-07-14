@@ -30,6 +30,7 @@ const getTruckData = async (delivery_id) => {
   const sql =
     "Select distinct dd.delivery_id, td.truck_id, t.vehicle_no from delivery_details as dd left join truck_deliveries as td on td.delivery_id=dd.delivery_id left join trucks as t on t.truck_id=td.truck_id where dd.delivery_id=?;";
   const result = await db.query(sql, [delivery_id]);
+  // console.log(result);
   return result[0];
 };
 

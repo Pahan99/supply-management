@@ -1,0 +1,372 @@
+<html lang="en">
+  <head>
+    <%- include('../components/header.ejs', { title: title })%>
+    <style>
+      .title{
+        letter-spacing: 0.8rem;
+      }
+    </style>
+  </head>
+  <body class="bg-dark">
+    <div class="min-height-300 bg-gradient-primary position-absolute fixed-top z-index-0 w-100"></div>
+
+    <%- include('../components/navbar.ejs') %>
+
+    <div class="container-fluid col-11">
+      <div class="row px-3">
+        <div class="col mx-auto">
+          <div class="card card-stats m-4 mx-auto">
+            <div class="card-body">
+              <div class="row">
+                  <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Total Customers</h5>
+                      <span class="h2 font-weight-bold mb-0"><%= data.customer_count %></span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-dark rounded-circle shadow text-center">
+                        <i class="ni ni-single-02"></i>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col mx-auto">
+          <div class="card card-stats m-4 mx-auto">
+            <div class="card-body">
+              <div class="row">
+                  <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Total Sales</h5>
+                      <span class="h2 font-weight-bold mb-0"><%= data.total_sales %></span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-dark rounded-circle shadow text-center">
+                        <i class="ni ni-money-coins"></i>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="card card-stats my-4 mx-2 mx-auto">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-6">
+                  <form>
+                    <div class="form-group">
+                      <label for="year-select">Select Year</label>
+                      <select class="form-control year-select" id="year-select">
+                        <option>2022</option>
+                        <option>2023</option>
+                        <option>2024</option>
+                        <option>2025</option>
+                        <option>2026</option>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="col-6">
+                  <form>
+                    <div class="form-group">
+                      <label for="quarter-select">Select Month Range</label>
+                      <select class="form-control quarter-select" id="quarter-select">
+                        <option value="1">quarter 1 - january to March</option>
+                        <option value="2">quarter 2 - April to June</option>
+                        <option value="3">quarter 3 - July to September</option>
+                        <option value="4">quarter 4 - October to December</option>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="col-6">
+                  <div class="card card-stats m-4 mx-auto shadow-lg">
+                    <div class="card-body">
+                      <div class="row">
+                          <div class="col">
+                              <h5 class="card-title text-uppercase text-muted mb-0">Number of Sales</h5>
+                              <span class="h2 font-weight-bold mb-0 sales-by-year">Loading...</span>
+                          </div>
+                          <div class="col-auto">
+                            <div class="icon icon-shape bg-dark rounded-circle shadow text-center">
+                                <i class="ni ni-delivery-fast"></i>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="card card-stats m-4 mx-auto shadow-lg">
+                    <div class="card-body">
+                      <div class="row">
+                          <div class="col">
+                              <h5 class="card-title text-uppercase text-muted mb-0">Revenue</h5>
+                              <span class="h2 font-weight-bold mb-0 revenue-by-year">Loading...</span>
+                          </div>
+                          <div class="col-auto">
+                            <div class="icon icon-shape bg-dark rounded-circle shadow text-center">
+                                <i class="ni ni-chart-bar-32"></i>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="card card-stats my-4 mx-2 mx-auto">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-6">
+                  <form>
+                    <div class="form-group">
+                      <label for="branch-select">Select Branch</label>
+                      <select class="form-control branch-select" id="branch-select">
+                        <option default value="1">Colombo</option>
+                        <option value="2">Negombo</option>
+                        <option value="3">Galle</option>
+                        <option value="4">Matara</option>
+                        <option value="5">Jaffna</option>
+                        <option value="6">Trinco</option>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="col-6">
+                  <form>
+                    <div class="form-group">
+                      <label for="route-select">Select Route</label>
+                      <select class="form-control route-select" id="route-select">
+                      </select>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="col-6">
+                  <div class="card card-stats m-4 mx-auto shadow-lg">
+                    <div class="card-body">
+                      <div class="row">
+                          <div class="col">
+                              <h5 class="card-title text-uppercase text-muted mb-0">Number of Sales</h5>
+                              <span class="h2 font-weight-bold mb-0 sales-by-branch">Loading...</span>
+                          </div>
+                          <div class="col-auto">
+                            <div class="icon icon-shape bg-dark rounded-circle shadow text-center">
+                                <i class="ni ni-delivery-fast"></i>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="card card-stats m-4 mx-auto shadow-lg">
+                    <div class="card-body">
+                      <div class="row">
+                          <div class="col">
+                              <h5 class="card-title text-uppercase text-muted mb-0">Revenue</h5>
+                              <span class="h2 font-weight-bold mb-0 revenue-by-branch">Loading...</span>
+                          </div>
+                          <div class="col-auto">
+                            <div class="icon icon-shape bg-dark rounded-circle shadow text-center">
+                                <i class="ni ni-chart-bar-32"></i>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="card card-stats m-4 mx-auto">
+            <div class="card-body">
+              <div class="row">
+                <h6 class="mb-3">Top 10 Trending Items</h6>
+                <div class="col-10 mx-auto">
+                  <table class="table table-striped table-hover text-center">
+                    <thead>
+                      <tr class="text-dark">
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Unit Price</th>
+                        <th scope="col">Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for( let i = 0; i < data.trending_item_details.length; i++ ) { %>
+                        <tr>
+                          <td><%= data.trending_item_details[i].product_id %></td>
+                          <td><%= data.trending_item_details[i].product_name %></td>
+                          <td>Rs. <%= data.trending_item_details[i].unit_price %></td>
+                          <td><%= data.trending_item_details[i].quantity %></td>
+                        </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <div class="card card-stats m-4 mx-auto">
+            <div class="card-body">
+              <div class="row">
+                <h6 class="mb-3">Driver Details</h6>
+                <div class="col-10 mx-auto">
+                  <table class="table table-striped table-hover text-center table-responsive">
+                    <thead>
+                      <tr class="text-dark">
+                        <th scope="col">Driver ID</th>
+                        <th scope="col">Driver's Name</th>
+                        <th scope="col">Weekly Hours</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for( let i = 0; i < data.driver_details.length; i++ ) { %>
+                        <tr>
+                          <td><%= data.driver_details[i].user_id %></th>
+                          <td><%= data.driver_details[i].name %></td>
+                          <td><%= data.driver_details[i].weekly_hours %></td>
+                        </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="card card-stats m-4 mx-auto">
+            <div class="card-body">
+              <div class="row">
+                <h6 class="mb-3">Driver Assistant Details</h6>
+                <div class="col-10 mx-auto">
+                  <table class="table table-striped table-hover text-center table-responsive">
+                    <thead>
+                      <tr class="text-dark">
+                        <th scope="col">Assistant ID</th>
+                        <th scope="col">Assistant's Name</th>
+                        <th scope="col">Weekly Hours</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for( let i = 0; i < data.assistant_details.length; i++ ) { %>
+                        <tr>
+                          <td><%= data.assistant_details[i].user_id %></th>
+                          <td><%= data.assistant_details[i].name %></td>
+                          <td><%= data.assistant_details[i].weekly_hours %></td>
+                        </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="card card-stats m-4 mx-auto">
+            <div class="card-body">
+              <div class="row">
+                <h6 class="mb-3">Customer - Order Details</h6>
+                <div class="col-10 mx-auto" style="height: 60vh; overflow-y: scroll;">
+                  <table class="table table-striped table-hover text-center table-responsive">
+                    <thead>
+                      <tr class="text-dark">
+                        <th scope="col">Customer ID</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Order Status</th>
+                        <th scope="col">Order Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let i = 0; i < data.order_customer_details.length; i++){ %>
+                        <% let row = data.order_customer_details[i]; %> 
+                        <tr>
+                          <td><%= row.customer_id %></td>
+                          <td><%= row.customer_name %></td>
+                          <td><%= row.order_id %></td>
+                          <td><%= row.status %></td>
+                          <td><%= row.order_date.toISOString().slice(0, 10) %></td>
+                        </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="card card-stats m-4 mx-auto">
+            <div class="card-body">
+              <div class="row">
+                <h6 class="mb-3">Truck usage details</h6>
+                <div class="col-10 mx-auto" style="height: 60vh; overflow-y: scroll;">
+                  <table class="table table-striped table-hover text-center table-responsive">
+                    <thead>
+                      <tr class="text-dark">
+                        <th scope="col">Truck ID</th>
+                        <th scope="col">Vehicle No.</th>
+                        <th scope="col">Total Used Hours</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let i = 0; i < data.used_hours.length; i++){ %>
+                        <% let row = data.used_hours[i]; %> 
+                        <tr>
+                          <td><%= row.truck_id %></td>
+                          <td><%= row.vehicle_no %></td>
+                          <td><%= row.used_time ? row.used_time : 0 %> hours</td>
+                        </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <%- include('../components/js-scripts.ejs') %>
+    <script src="../assets/js/report_script.js"></script>
+  </body>
+</html>

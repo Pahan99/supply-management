@@ -9,7 +9,7 @@ order_status_list = {
 };
 
 const getOrderDetails = async () => {
-  const sql = "SELECT * FROM `get_train_order_details`";
+  const sql = "SELECT * FROM `order_details`";
   const result = await db.query(sql);
   return result[0];
 };
