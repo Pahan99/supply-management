@@ -299,28 +299,28 @@
             role="tabpanel"
             aria-labelledby="nav-schedule-tab"
           >
-          
-          <% if (data.length==0) { %>
+            <% if (data.length==0) { %>
             <div class="row mt-4 px-5 py-4 border-radius-lg z-index-4 mt-300">
               <h3>No Scheduled Trucks currently...</h3>
             </div>
-          <% } %> 
-            <% for( let i = 0; i < data.length; i++ ) {%>
-                <% sect = data[i] %>
+            <% } %> <% for( let i = 0; i < data.length; i++ ) {%> <% sect =
+            data[i] %>
             <div class="row mt-4 px-5 trip<%=i%>">
               <div class="my-3 px-3 d-grid accordion" id="trip">
                 <div class="row accordion-item">
                   <div class="accordion-body col-md-7 col-10">
                     <h5 class="title route">
-                      <i class="fa fa-road"></i>&nbsp;&nbsp;Route ID : <%=sect[0][0] %> |
-                      <%= sect[0][1]%>
+                      <i class="fa fa-road"></i>&nbsp;&nbsp;Route ID :
+                      <%=sect[0][0] %> | <%= sect[0][1]%>
                     </h5>
                     <hr />
                     <p class="body-text truck">
-                      <i class="fa fa-truck"></i>&nbsp;&nbsp;Truck ID: <%= sect[0][2] %>
+                      <i class="fa fa-truck"></i>&nbsp;&nbsp;Truck ID: <%=
+                      sect[0][2] %>
                     </p>
                     <p class="body-text truck-number">
-                      <i class="fa fa-id-card"></i>&nbsp;&nbsp;Truck No: <%= sect[0][3] %>
+                      <i class="fa fa-id-card"></i>&nbsp;&nbsp;Truck No: <%=
+                      sect[0][3] %>
                     </p>
                     <p class="body-text num-orders">
                       <i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Number of
@@ -331,12 +331,7 @@
                       class="form-select driver-select my-2"
                       aria-label="driver-select"
                     >
-                      <option selected>Select Driver</option>
-                      <option value="1">Akash</option>
-                      <option value="2">Pahan</option>
-                      <option value="3">Nipun</option>
-                      <option value="4">Sahan</option>
-                      <option value="5">Saduni</option>
+                      <option selected value="0">Select Driver</option>
                     </select>
                     <select
                       class="form-select assistant-select my-2"
@@ -418,8 +413,8 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <% for( let j = 1; j < sect.length; j++ ) { %>
-                            <% order = sect[j] %>
+                          <% for( let j = 1; j < sect.length; j++ ) { %> <%
+                          order = sect[j] %>
                           <tr>
                             <td><%= order.order_date %></td>
                             <td><%= order.delivery_date %></td>
@@ -444,5 +439,6 @@
     <%- include('../components/js-scripts.ejs') %> //
     <script src="../assets/js/load-manager-data.js"></script>
     <script src="../assets/js/confirm-train.js"></script>
+    <script src="../assets/js/load-drivers.js"></script>
   </body>
 </html>

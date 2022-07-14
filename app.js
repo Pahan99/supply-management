@@ -6,6 +6,8 @@ const homeRoute = require("./routes/home");
 const userRoute = require("./routes/user");
 const reportRoute = require("./routes/report");
 const trainRoute = require("./routes/train");
+const driverRoute = require("./routes/driver");
+const driverAssistantRoute = require("./routes/driverAssistant");
 
 app = express();
 
@@ -20,5 +22,7 @@ app.use("/", homeRoute);
 app.use("/", userRoute);
 app.use("/", reportRoute);
 app.use("/trains", trainRoute);
+app.use("/drivers", driverRoute);
+app.use("/driver-assistants", driverAssistantRoute);
 
 exports.app = app;

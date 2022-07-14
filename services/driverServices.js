@@ -1,9 +1,10 @@
 const { db } = require("../database/db-config");
 
-const getAvailableDrivers = async () => {
+const getAvailableDrivers = async (branch_id) => {
   const sql =
-    "SELECT * FROM drivers WHERE weekly_hours < 60 AND availability = 1 AND user_id NOT IN (SELECT driver_id FROM truck_deliveries ORDER BY assigned_at LIMIT 1)";
-  return db.query(sql);
+    "SELECT user_id,name,branch_id,weekly_hours,total_hours,availability FROM drivers LEFT JOIN users USING(user_id) WHERE weekly_hours < 60 AND availability = TRUE AND user_id NOT IN (SELECT * FROM last_assigned_driver) AND branch_id=?";
+  const result = await db.query(sql,[branch_id]);
+  return result[0];
 };
 
 module.exports = {
