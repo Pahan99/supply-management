@@ -10,6 +10,7 @@ const {
   formatTime,
 } = require("../services/helpers/data");
 const { roles } = require("../services/helpers/data");
+const reportServices = require("../services/reportServices");
 
 const viewHome = (req, res) => {
   res.render("pages/login.ejs");
@@ -141,6 +142,28 @@ const viewDashboard = async (req, res) => {
   }
 };
 
+const viewReports = async (req, res) => {
+  const user_id = req.cookies.id;
+
+  const trending_item_details = await reportServices.getTrendingItemsDetails();
+  const driver_details = await reportServices.getDriverDetails();
+  const total_used_time = await reportServices.getTruckDetails();
+  const customer_count = await reportServices.getCustomerCount();
+  const total_sales = await reportServices.getTotalSales();
+  const order_customer_details = await reportServices.getOrderCustomerDetails();
+
+  const data = {
+    driver_details: driver_details.driver_details,
+    assistant_details: driver_details.assistant_details,
+    trending_item_details: trending_item_details,
+    customer_count: customer_count,
+    total_sales: total_sales,
+    order_customer_details: order_customer_details,
+  }
+
+  res.render("pages/report.ejs", { title: "report", data: data });
+}
+
 function get_order_ids(orders) {
   order_ids = [];
   order_details.forEach((order_detail) => {
@@ -149,6 +172,7 @@ function get_order_ids(orders) {
 }
 
 module.exports = {
-  viewHome: viewHome,
-  viewDashboard: viewDashboard,
+  viewHome,
+  viewDashboard,
+  viewReports,
 };
