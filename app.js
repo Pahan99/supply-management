@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const homeRoute = require("./routes/home");
 const userRoute = require("./routes/user");
 const trainRoute = require("./routes/train");
+const driverRoute = require("./routes/driver");
+const driverAssistantRoute = require("./routes/driverAssistant");
 
 app = express();
 
@@ -18,5 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", homeRoute);
 app.use("/", userRoute);
 app.use("/trains", trainRoute);
+app.use("/drivers", driverRoute);
+app.use("/driver-assistants", driverAssistantRoute);
 
 exports.app = app;
