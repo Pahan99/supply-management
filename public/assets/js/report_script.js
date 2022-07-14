@@ -3,7 +3,6 @@ let date = new Date();
 let curr_year = date.getFullYear();
 let curr_month = date.getMonth();
 let curr_quarter = Math.floor(curr_month/3) + 1;
-console.log(curr_quarter);
 
 const year_input = document.querySelector('.year-select');
 const quarter_input = document.querySelector('.quarter-select');
@@ -33,16 +32,17 @@ $(document).ready(function(event){
         });
 });
 
+// year change
 $(year_input).on('change', function(event){
     event.preventDefault();
     event.stopPropagation();
 
     data = {
         year: event.target.value,
-        quarter: curr_quarter,
+        quarter: quarter_input.value,
     }
 
-    // console.log(data);
+    console.log(data);
     
     $.ajax({
         url: "/updateSalesByYear",
@@ -61,12 +61,13 @@ $(year_input).on('change', function(event){
         });
 });
 
+// quarter change
 $(quarter_input).on('change', function(event){
     event.preventDefault();
     event.stopPropagation();
 
     data = {
-        year: curr_year,
+        year: year_input.value,
         quarter: event.target.value,
     }
 
@@ -101,7 +102,7 @@ $(document).ready(function(e){
         data: data,
     })
         .done(function(result){
-            console.log(result);
+            // console.log(result);
             const routes = result.routes;
 
             let html_string = "";
@@ -120,6 +121,7 @@ $(document).ready(function(e){
         });
 });
 
+// branch change
 $(branch_input).on('change', function(event){
     event.preventDefault();
     event.stopPropagation();
@@ -154,6 +156,7 @@ $(branch_input).on('change', function(event){
         });
 });
 
+// route change
 $(route_input).on('change', function(event){
     event.preventDefault();
     event.stopPropagation();

@@ -13,7 +13,7 @@ const updateSalesByBranch = async (req, res) => {
     let branch = req.body.branch;
     let route = req.body.route;
     const type = req.body.type;
-    console.log(type);
+    // console.log(type);
 
     // get the relevant routes
     const routes = await reportServices.getRoutesForBranch(branch);
