@@ -77,7 +77,7 @@ orders = [
     order_id: 10,
     customer_id: 5,
     route_id: 5,
-    status_id: 1,
+    status_id: 3,
     order_date: "2022-06-30",
     delivery_date: "2022-07-11",
   },

@@ -80,7 +80,7 @@ users = [
     password: "123@desh",
     phone: "0786542591",
     role_id: 3,
-    branch_id: 1,
+    branch_id: 4,
   },
   {
     user_id: 10,

@@ -6,7 +6,7 @@ CREATE TABLE `truck_deliveries` (
 	`route_id` INT,
     `delivery_status` BOOLEAN DEFAULT FALSE,
 	`capacity_free` DECIMAL(10,2),
-	`assigned_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+	`assigned_at` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`delivery_id`),
     CONSTRAINT `truck_deliveries_fk0` FOREIGN KEY (`driver_id`) REFERENCES `drivers`(`user_id`) ON DELETE CASCADE,
     CONSTRAINT `truck_deliveries_fk1` FOREIGN KEY (`driver_assistant_id`) REFERENCES `driver_assistants`(`user_id`) ON DELETE CASCADE,

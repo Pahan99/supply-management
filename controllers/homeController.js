@@ -2,7 +2,7 @@ const orderServices = require("../services/orderServices");
 const userServices = require("../services/userServices");
 const trainServices = require("../services/trainServices");
 const truckServices = require("../services/truckServices");
-const timeFormat = require("../services/helpers/timeFormat")
+const timeFormat = require("../services/helpers/timeFormat");
 
 const {
   order_status_list,
@@ -21,9 +21,9 @@ const viewDashboard = async (req, res) => {
   const user_role = await userServices.findRole(user_id);
   const user_branch_id = await userServices.findBranch(user_id);
 
-  await trainServices.makePartitions();
   switch (user_role) {
     case roles.SUPERVISOR: {
+      await trainServices.makePartitions();
       // res.render("pages/dashboard_supervisor.ejs");
 
       const trips = await trainServices.getTrainTrips();
@@ -32,7 +32,8 @@ const viewDashboard = async (req, res) => {
       // console.log(partitions);
       for (let i = 0; i < trips.length; i++) {
         const trip = trips[i];
-        trip.dep_date = trip.dep_date;
+        trip.dep_date = formatDate(trip.dep_date);
+        trip.dep_time = formatTime(trip.dep_time);
 
         const trip_orders = await trainServices.getTrainTripDetails(
           trip.trip_id,
@@ -40,7 +41,7 @@ const viewDashboard = async (req, res) => {
         );
         if (trip_orders.length == 0) continue;
         trip_orders.forEach((order) => {
-          order.order_date = order.order_dates;
+          order.order_date = formatDate(order.order_date);
         });
         records.push({
           train_details: trip,
@@ -53,6 +54,8 @@ const viewDashboard = async (req, res) => {
       break;
     }
     case roles.MANAGER:
+      // console.log(user_branch_id);
+      await truckServices.makePartitions(user_branch_id);
       const train_trips = await trainServices.getTrainTripsByBranch(
         user_branch_id
       );
@@ -88,28 +91,44 @@ const viewDashboard = async (req, res) => {
           });
         }
       }
-      // return res.json(in_store);
+
+      // truck details
       const routes = await truckServices.getRouteswithOrders(user_branch_id);
       const data = [];
       for (let i = 0; i < routes.length; i++) {
-        const delivery_IDs = await truckServices.getDeliveryID(routes[i].route_id);
+        const delivery_IDs = await truckServices.getDeliveryID(
+          routes[i].route_id
+        );
+        // console.log(delivery_IDs);
         for (let j = 0; j < delivery_IDs.length; j++) {
-            const sect = [];
-            const truckData = await truckServices.getTruckData(delivery_IDs[j].delivery_id);
-            const truckdetails = [routes[i].route_id, routes[i].route_name, truckData[0].truck_id, truckData[0].vehicle_no];
-            const viewData = await truckServices.getViewOrdersData(delivery_IDs[j].delivery_id);
-            for (let k = 0; k < viewData.length; k++) {
-              viewData[k].order_date = timeFormat.formatTime(viewData[k].order_date).slice(0,15);
-              viewData[k].delivery_date = timeFormat.formatTime(viewData[k].delivery_date).slice(0,15);
-            }
-            sect.push(truckdetails);
-            for (let k = 0; k < viewData.length; k++) {
-              sect.push(viewData[k]);
-            }
-            data.push(sect);
-        }   
+          const sect = [];
+          const truckData = await truckServices.getTruckData(
+            delivery_IDs[j].delivery_id
+          );
+          const truckdetails = [
+            routes[i].route_id,
+            routes[i].route_name,
+            truckData[0].truck_id,
+            truckData[0].vehicle_no,
+          ];
+          const viewData = await truckServices.getViewOrdersData(
+            delivery_IDs[j].delivery_id
+          );
+          // console.log(viewData);
+          // break;
+          for (let k = 0; k < viewData.length; k++) {
+            viewData[k].order_date = formatDate(viewData[k].order_date);
+
+            viewData[k].delivery_date = formatDate(viewData[k].delivery_date);
+          }
+          sect.push(truckdetails);
+          for (let k = 0; k < viewData.length; k++) {
+            sect.push(viewData[k]);
+          }
+          data.push(sect);
+        }
       }
-      res.render("pages/dashboard_manager.ejs", { loaded ,in_store,data});
+      res.render("pages/dashboard_manager.ejs", { loaded, in_store, data });
       break;
     case roles.DRIVER:
       res.render("pages/dashboard_driver.ejs");

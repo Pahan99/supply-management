@@ -13,7 +13,7 @@ const get_orders = async (branch_id) => {
 
 const get_orders_products = async (order_id) => {
   const sql =
-    "SELECT order_id, product_id, quantity*unit_weight as product_weight FROM order_details od LEFT JOIN products USING(product_id) WHERE (order_id=? AND train_order_partition_id IS NULL) ORDER BY product_weight DESC";
+    "SELECT order_id, product_id, quantity*unit_weight as product_weight FROM order_details od LEFT JOIN products USING(product_id) WHERE (order_id=? AND truck_order_partition_id IS NULL) ORDER BY product_weight DESC";
   product_weights = await db.query(sql, [order_id]);
   // console.log(product_weights[0]);
   return product_weights[0];
@@ -88,8 +88,9 @@ const add_truck_deliveries = async (branch_id) => {
 };
 
 const make_partitions = async () => {
-  branch_id = 1;
+  branch_id = 4;
   const orders = await get_orders(branch_id);
+  // console.log(orders);
   let assigned = [];
   let missed = {};
   while (assigned.length != orders.length) {
@@ -103,7 +104,11 @@ const make_partitions = async () => {
       const route_id = orders[i].route_id;
 
       const product_list = await get_orders_products(order_id);
-      if (product_list.length == 0) continue;
+      // console.log(product_list);
+      if (product_list.length == 0) {
+        assigned.push(order_id);
+        continue;
+      }
       const trucks = await get_truck_details(branch_id);
       if (missed[order_id].length == 0) {
         for (let i = 0; i < product_list.length; i++) {
@@ -118,7 +123,7 @@ const make_partitions = async () => {
       for (let i = 0; i < trucks.length; i++) {
         if (missed[order_id].length == 0) continue;
         let truck = trucks[i];
-        console.log(truck);
+        // console.log(truck);
 
         const partition = {
           order_id: order_id,
@@ -166,8 +171,9 @@ const make_partitions = async () => {
       await add_truck_deliveries(branch_id);
     }
   }
-  process.exit();
+  return;
+  // process.exit();
 };
 
-// exports.make_partitions = make_partitions;
-make_partitions();
+exports.make_partitions = make_partitions;
+// make_partitions();
