@@ -91,6 +91,36 @@ customers = [
     address: "Sri Ganesh, Mulativ",
     phone: "0784514512",
   },
+  {
+    customer_id: 16,
+    customer_name: "Hashith Karunanayaka",
+    address: "Hali rd, Rathnapura",
+    phone: "0773621459",
+  },
+  {
+    customer_id: 17,
+    customer_name: "Janith Perera",
+    address: "Jani Fashions, Puttalam",
+    phone: "0776988544",
+  },
+  {
+    customer_id: 18,
+    customer_name: "Akila Danusha",
+    address: "Sri wickarama rd, Embilipitiya",
+    phone: "0716632445",
+  },
+  {
+    customer_id: 19,
+    customer_name: "Harsha Janindu",
+    address: "Men's store, Anuradhapura.",
+    phone: "0779634558",
+  },
+  {
+    customer_id: 20,
+    customer_name: "Mahen Perera",
+    address: "Wall street, Maharagama",
+    phone: "0768847225",
+  },
 ];
 
 async function addCustomers() {
