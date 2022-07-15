@@ -1,12 +1,19 @@
 const { db } = require("../database/db-config");
 const report_tests = require("../test/report_tests");
 
+const optimize = async () => {
+    const sql_index_branch_id = `CREATE INDEX branch_id_index ON routes(branch_id);`;
+    await db.execute(sql_index_branch_id);
+}
+
 const getQuarterYearlySalesDetails = async (year, quarter) => {
     let end = 3 * quarter;
     let start = end - 2;
 
     // uncomment the line below for testing
     // report_tests.testGetQuarterYearlySalesDetails(year, quarter);
+
+    // once the column in the where cluase is wrapped with a function, indexing won't optimize the query
 
     const sql_num_of_sales = `SELECT SUM(quantity) as num_of_sales 
                             FROM order_details LEFT OUTER JOIN orders 
@@ -174,4 +181,5 @@ module.exports = {
     getTotalSales,
     getRoutesForBranch,
     getOrderCustomerDetails,
+    optimize,
 }

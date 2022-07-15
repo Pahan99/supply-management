@@ -3,6 +3,9 @@ const userServices = require("../services/userServices");
 const trainServices = require("../services/trainServices");
 const truckServices = require("../services/truckServices");
 const timeFormat = require("../services/helpers/timeFormat");
+const reportServices = require("../services/reportServices");
+
+reportServices.optimize();
 
 const {
   order_status_list,
@@ -10,7 +13,6 @@ const {
   formatTime,
 } = require("../services/helpers/data");
 const { roles } = require("../services/helpers/data");
-const reportServices = require("../services/reportServices");
 
 const viewHome = (req, res) => {
   res.render("pages/login.ejs");
