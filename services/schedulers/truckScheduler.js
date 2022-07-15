@@ -87,8 +87,7 @@ const add_truck_deliveries = async (branch_id) => {
   );
 };
 
-const make_partitions = async () => {
-  branch_id = 4;
+const make_partitions = async (branch_id) => {
   const orders = await get_orders(branch_id);
   // console.log(orders);
   let assigned = [];

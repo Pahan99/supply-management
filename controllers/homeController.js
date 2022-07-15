@@ -131,31 +131,68 @@ const viewDashboard = async (req, res) => {
       }
       res.render("pages/dashboard_manager.ejs", { loaded, in_store, data });
       break;
-    case roles.DRIVER:
-      // const del = await truckServices.getTruckDeliveriesByDriver(user_id);
-      // let del_id = del.delivery_id;
-      
+    case roles.DRIVER:{
+      await truckServices.makePartitions(user_branch_id);
+      const del_details = await truckServices.getTruckDeliveriesByDriver(user_id);
+      const delivery_id = del_details[0].delivery_id
+      const route_id = del_details[0].route_id
+      const route = await truckServices.getRouteByRouteID(route_id);
+      const order_details = await truckServices.getTruckDeliveriesByDeliveryDetail(delivery_id, route_id);
+      let record_list = []
+      record_list.push({route: route[0].route_name})
 
-      const records = {
-        route_name: "Route A",
-        order_details: [
-          {
-            order_id: 10,
-            customer: "Customer A",
-            products: [],
-          },
-          {
-            order_id: 11,
-            customer: "Customer B",
-            products: [],
-          },
-        ],
-      };
-      res.render("pages/dashboard_driver.ejs", { records });
+      for (let i = 0; i < order_details.length; i++) {
+        let record = []
+        const order_id = order_details[i].order_id;
+        const products = await orderServices.getProductDetailsByOrderID(order_id);
+        record = {
+          order_id  : order_id,
+          customer  : order_details[i].customer_name,
+          address   : order_details[i].address,
+          order_date: formatDate(order_details[i].order_date),
+          due_date  : formatDate(order_details[i].delivery_date),
+          products  : products,
+        }
+        record_list.push(record)
+      }
+      res.render("pages/dashboard_driver.ejs", { record_list });
       break;
-    case roles.DRIVER_ASSISTANT:
-      res.render("pages/dashboard_assistant.ejs");
+    }
+    case roles.DRIVER_ASSISTANT:{
+      await truckServices.makePartitions(user_branch_id);
+      const del_details = await truckServices.getTruckDeliveriesByAssistant(user_id);
+      console.log(del_details);
+      let record_list = []
+      for (let i = 0; i < del_details.length; i++) {
+        const del_detail = del_details[i];
+        const delivery_id = del_detail.delivery_id;
+        const route_id = del_detail.route_id;
+        const route = await truckServices.getRouteByRouteID(route_id);
+        const order_details = await truckServices.getTruckDeliveriesByDeliveryDetail(delivery_id, route_id);
+        let record_ = []
+        record_.push({delivery_id: delivery_id});
+        record_.push({route: route[0].route_name});
+        for (let i = 0; i < order_details.length; i++) {
+          let record = []
+          const order_id = order_details[i].order_id;
+          const products = await orderServices.getProductDetailsByOrderID(order_id);
+          
+          record = {
+            order_id  : order_id,
+            customer  : order_details[i].customer_name,
+            address   : order_details[i].address,
+            order_date: formatDate(order_details[i].order_date),
+            due_date  : formatDate(order_details[i].delivery_date),
+            products  : products,
+          }
+          record_.push(record);
+        }
+        record_list.push(record_);
+      }
+      console.log(record_list);
+      res.render("pages/dashboard_assistant.ejs", {record_list});
       break;
+    }
     default:
       break;
   }

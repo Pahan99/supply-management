@@ -54,13 +54,37 @@ const updateTruckOrderPartition = async () => {
 };
 
 const getTruckDeliveriesByDriver = async (driver_id) => {
-  const sql = "";
-  const result = await db.execute(sql);
+  const sql = "SELECT delivery_id, route_id FROM truck_deliveries WHERE driver_id=? AND delivery_status=0";
+  const result = await db.execute(sql, [driver_id]);
   return result[0];
 };
 
-const makePartitions = async () => {
-  await make_partitions();
+const getTruckDeliveriesByAssistant = async (driver_id) => {
+  const sql = "SELECT delivery_id, route_id FROM truck_deliveries WHERE driver_assistant_id=? AND delivery_status=0";
+  const result = await db.execute(sql, [driver_id]);
+  return result[0];
+};
+
+const getTruckDeliveriesByDeliveryDetail = async (delivery_id, route_id) => {
+  const sql = "SELECT  o.order_id, c.customer_name, c.address, o.order_date, o.delivery_date FROM customers c RIGHT JOIN orders AS o USING(customer_id) RIGHT JOIN truck_order_partitions AS tr USING(order_id) RIGHT JOIN delivery_details AS dd USING(truck_order_partition_id) WHERE delivery_id=? AND route_id=?";
+  const result = await db.execute(sql, [delivery_id, route_id]);
+  return result[0];
+};
+
+// const getTruckDeliveriesByDeliveryID= async (delivery_id) => {
+//   const sql = "SELECT  o.order_id, c.customer_name, c.address, o.order_date, o.route_id, o.delivery_date FROM customers c RIGHT JOIN orders AS o USING(customer_id) RIGHT JOIN truck_order_partitions AS tr USING(order_id) RIGHT JOIN delivery_details AS dd USING(truck_order_partition_id) WHERE delivery_id=?";
+//   const result = await db.execute(sql, [delivery_id]);
+//   return result[0];
+// };
+
+const getRouteByRouteID = async (route_id) => {
+  const sql = "SELECT route_name FROM routes WHERE route_id=?"
+  const result = await db.execute(sql, [route_id]);
+  return result[0];
+}
+
+const makePartitions = async (branch_id) => {
+  await make_partitions(branch_id);
 };
 
 module.exports = {
@@ -73,5 +97,8 @@ module.exports = {
   updateTruckOrderPartition,
   makePartitions,
   getAllTruckOrderPartitions,
-  getTruckDeliveriesByDriver
+  getTruckDeliveriesByDriver,
+  getTruckDeliveriesByDeliveryDetail,
+  getRouteByRouteID,
+  getTruckDeliveriesByAssistant,
 };
