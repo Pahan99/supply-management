@@ -2,9 +2,8 @@ async function confirm(id) {
   const trip_id = id;
   await axios.post("/trains/confirm-train/" + trip_id);
   let trip = "#trip" + id;
-  $tr = $(trip);
-  $tr.hide();
-  console.log($tr);
+  $(trip).hide();
+  // console.log($tr);
   // location.replace("/dashboard");
 }
 
