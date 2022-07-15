@@ -1,11 +1,6 @@
 const { db } = require("../database/db-config");
 const report_tests = require("../test/report_tests");
 
-const optimize = async () => {
-    const sql_index_branch_id = `CREATE INDEX branch_id_index ON routes(branch_id);`;
-    await db.execute(sql_index_branch_id);
-}
-
 const getQuarterYearlySalesDetails = async (year, quarter) => {
     let end = 3 * quarter;
     let start = end - 2;
@@ -181,5 +176,4 @@ module.exports = {
     getTotalSales,
     getRoutesForBranch,
     getOrderCustomerDetails,
-    optimize,
 }

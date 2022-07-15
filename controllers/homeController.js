@@ -5,8 +5,6 @@ const truckServices = require("../services/truckServices");
 const timeFormat = require("../services/helpers/timeFormat");
 const reportServices = require("../services/reportServices");
 
-reportServices.optimize();
-
 const {
   order_status_list,
   formatDate,
