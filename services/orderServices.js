@@ -32,9 +32,16 @@ const updateOrderDetails = async () => {
   return result[0];
 };
 
+const getProductDetailsByOrderID = async (order_id) => {
+  const sql = "SELECT p.product_id, p.product_name, od.quantity, p.unit_price FROM orders o LEFT JOIN order_details od USING(order_id) LEFT JOIN products p USING (product_id) WHERE order_id=?";
+  const result = await db.execute(sql, [order_id]);
+  return result[0];
+}
+
 module.exports = {
   getOrderDetails,
   getOrderDetailsByStatus,
   updateOrderStatus,
   updateOrderDetails,
+  getProductDetailsByOrderID
 };

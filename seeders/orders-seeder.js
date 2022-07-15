@@ -29,7 +29,7 @@ orders = orders = [
     order_id: 4,
     customer_id: 4,
     route_id: 1,
-    status_id: 1,
+    status_id: 3,
     order_date: "2022-07-02",
     delivery_date: "2022-07-11",
   },
