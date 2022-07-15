@@ -8,6 +8,8 @@ const getQuarterYearlySalesDetails = async (year, quarter) => {
     // uncomment the line below for testing
     // report_tests.testGetQuarterYearlySalesDetails(year, quarter);
 
+    // once the column in the where cluase is wrapped with a function, indexing won't optimize the query
+
     const sql_num_of_sales = `SELECT SUM(quantity) as num_of_sales 
                             FROM order_details LEFT OUTER JOIN orders 
                             USING(order_id) 

@@ -3,6 +3,7 @@ const userServices = require("../services/userServices");
 const trainServices = require("../services/trainServices");
 const truckServices = require("../services/truckServices");
 const timeFormat = require("../services/helpers/timeFormat");
+const reportServices = require("../services/reportServices");
 
 const {
   order_status_list,
@@ -10,7 +11,6 @@ const {
   formatTime,
 } = require("../services/helpers/data");
 const { roles } = require("../services/helpers/data");
-const reportServices = require("../services/reportServices");
 
 const viewHome = (req, res) => {
   res.render("pages/login.ejs");
@@ -96,13 +96,14 @@ const viewDashboard = async (req, res) => {
       // truck details
       const routes = await truckServices.getRouteswithOrders(user_branch_id);
       const data = [];
+      console.log(routes);
       for (let i = 0; i < routes.length; i++) {
         const delivery_IDs = await truckServices.getDeliveryID(
           routes[i].route_id
         );
-        // console.log(delivery_IDs);
         for (let j = 0; j < delivery_IDs.length; j++) {
           const sect = [];
+          if (delivery_IDs[j].delivery_id == null) continue;
           const truckData = await truckServices.getTruckData(
             delivery_IDs[j].delivery_id
           );
@@ -111,6 +112,7 @@ const viewDashboard = async (req, res) => {
             routes[i].route_name,
             truckData[0].truck_id,
             truckData[0].vehicle_no,
+            delivery_IDs[j].delivery_id,
           ];
           const viewData = await truckServices.getViewOrdersData(
             delivery_IDs[j].delivery_id
@@ -129,8 +131,10 @@ const viewDashboard = async (req, res) => {
           data.push(sect);
         }
       }
+      // res.json(data);
       res.render("pages/dashboard_manager.ejs", { loaded, in_store, data });
       break;
+
     case roles.DRIVER:{
       await truckServices.makePartitions(user_branch_id);
       const del_details = await truckServices.getTruckDeliveriesByDriver(user_id);
@@ -164,6 +168,7 @@ const viewDashboard = async (req, res) => {
         record_list[order_id].products.push(product_detail)
       }
       res.render("pages/dashboard_driver.ejs", { record_list, order_ids });
+
       break;
     }
     case roles.DRIVER_ASSISTANT:{
@@ -232,10 +237,10 @@ const viewReports = async (req, res) => {
     total_sales: total_sales ? total_sales : 0,
     order_customer_details: order_customer_details,
     used_hours: used_hours,
-  }
+  };
 
   res.render("pages/report.ejs", { title: "report", data: data });
-}
+};
 
 function get_order_ids(orders) {
   order_ids = [];

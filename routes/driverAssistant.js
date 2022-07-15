@@ -1,8 +1,8 @@
 const express = require("express");
-const driverController = require("../controllers/driverController");
+const driverAssistantController = require("../controllers/driverAssistantController");
 
 const router = express.Router();
 
-router.get("/", driverController.getDrivers);
+router.get("/", driverAssistantController.getDriverAssistants);
 
 module.exports = router;

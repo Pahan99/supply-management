@@ -1,4 +1,6 @@
 const { db } = require("../database/db-config");
+const driverServices = require("./driverServices");
+const driverAssistantServices = require("./driverAssistantServices");
 const { make_partitions } = require("./schedulers/truckScheduler");
 
 const getAllTrucks = async () => {
@@ -21,7 +23,7 @@ const getRouteswithOrders = async (branch_id) => {
 
 const getDeliveryID = async (route_id) => {
   const sql =
-    "select min(delivery_id) as delivery_id from (select distinct o.route_id, o.order_id, od.product_id, od.truck_order_partition_id,dd.delivery_id,td.truck_id from orders as o left join order_details as od on od.order_id=o.order_id left join delivery_details as dd on dd.truck_order_partition_id=od.truck_order_partition_id left  join truck_deliveries as td on td.delivery_id=dd.delivery_id where o.status_id=3 and o.route_id=? order by truck_id, delivery_id) as t GROUP BY truck_id;";
+    "select min(delivery_id) as delivery_id from (select distinct o.route_id, o.order_id, od.product_id, od.truck_order_partition_id,dd.delivery_id,td.truck_id from orders as o left join order_details as od on od.order_id=o.order_id left join delivery_details as dd on dd.truck_order_partition_id=od.truck_order_partition_id left join truck_deliveries as td on td.delivery_id=dd.delivery_id where o.status_id=3 and td.driver_id is null and o.route_id=? order by truck_id, delivery_id) as t GROUP BY truck_id;";
   const result = await db.query(sql, [route_id]);
   return result[0];
 };
@@ -65,6 +67,7 @@ const getTruckDeliveriesByAssistant = async (driver_id) => {
   return result[0];
 };
 
+
 const getTruckDeliveriesByDeliveryDetail = async (delivery_id) => {
   const sql = "SELECT o.order_id, c.customer_name, c.address, o.order_date, o.delivery_date, p.product_id, p.product_name, od.quantity, p.unit_price FROM order_details od LEFT JOIN orders o USING(order_id) LEFT JOIN customers c USING(customer_id) LEFT JOIN products p USING(product_id) WHERE truck_order_partition_id IN (SELECT truck_order_partition_id FROM delivery_details WHERE delivery_id=?)";
   const result = await db.execute(sql, [delivery_id]);
@@ -85,6 +88,19 @@ const getRouteByRouteID = async (route_id) => {
 
 const makePartitions = async (branch_id) => {
   await make_partitions(branch_id);
+
+const makePartitions = async (branch_id) => {
+  await make_partitions(branch_id);
+};
+
+const updateAssigned = async (delivery_id, driver_id, assistant_id) => {
+  await driverServices.updateAvailability(driver_id);
+  await driverAssistantServices.updateAvailability(assistant_id);
+  await db.query(
+    "UPDATE truck_deliveries SET driver_id=?,driver_assistant_id=?,assigned_at=(SELECT NOW()) WHERE delivery_id=?",
+    [driver_id, assistant_id, delivery_id]
+  );
+
 };
 
 module.exports = {
@@ -101,4 +117,5 @@ module.exports = {
   getTruckDeliveriesByDeliveryDetail,
   getRouteByRouteID,
   getTruckDeliveriesByAssistant,
+  updateAssigned,
 };
