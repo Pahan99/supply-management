@@ -1,0 +1,1 @@
+CREATE INDEX branch_id_index ON routes(branch_id)

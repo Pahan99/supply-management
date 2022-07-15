@@ -1,0 +1,1 @@
+DROP INDEX IF EXISTS branch_id_index
