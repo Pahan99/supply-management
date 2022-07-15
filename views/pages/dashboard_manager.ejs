@@ -58,13 +58,18 @@
             aria-labelledby="nav-ontheway-tab"
           >
             <div class="row mt-4 px-5 loadedTrips">
-              <% for( let i = 0; i < loaded.length; i++ ) { %> <% record =
-              loaded[i] %>
-              <div
-                class="my-3 px-3 d-grid accordion"
-                id="trip<%=record.train_details.trip_id  %>"
-              >
-                <div class="row accordion-item">
+              <div class="my-3 px-3 d-grid accordion">
+                <% if (loaded.length==0) { %>
+
+                <h5>No train trips currently...</h5>
+
+                <% } %> <% for( let i = 0; i < loaded.length; i++ ) { %> <%
+                record = loaded[i] %>
+
+                <div
+                  class="row accordion-item"
+                  id="trip<%=record.train_details.trip_id  %>"
+                >
                   <div class="accordion-body col-md-7 col-10">
                     <h5 class="title route text-dark">
                       <i class="fa fa-train"></i>&nbsp; Kandy - <%=
@@ -172,8 +177,9 @@
                     </div>
                   </div>
                 </div>
+
+                <% } %>
               </div>
-              <% } %>
             </div>
           </div>
           <div
@@ -301,13 +307,17 @@
           >
             <% if (data.length==0) { %>
             <div class="row mt-4 px-5 py-4 border-radius-lg z-index-4 mt-300">
-              <h3>No Scheduled Trucks currently...</h3>
+              <h5>No Scheduled Trucks currently...</h5>
             </div>
             <% } %> <% for( let i = 0; i < data.length; i++ ) {%> <% sect =
             data[i] %>
-            <div class="row mt-4 px-5 trip<%=i%>">
-              <div class="my-3 px-3 d-grid accordion" id="trip">
-                <div class="row accordion-item">
+            <div class="row mt-4 px-5">
+              <div class="my-3 px-3 d-grid accordion">
+                <div
+                  class="row accordion-item delivery"
+                  id="<%=
+                      sect[0][4] %>"
+                >
                   <div class="accordion-body col-md-7 col-10">
                     <h5 class="title route">
                       <i class="fa fa-road"></i>&nbsp;&nbsp;Route ID :
@@ -327,6 +337,7 @@
                       orders: <%= sect.length-1 %>
                     </p>
                     <hr />
+                    <small class="warning text-danger text-bold"> </small>
                     <select
                       class="form-select driver-select my-2"
                       aria-label="driver-select"
@@ -338,17 +349,11 @@
                       aria-label="assistant-select"
                     >
                       <option selected>Select Assistant</option>
-                      <option value="1">Akash</option>
-                      <option value="2">Pahan</option>
-                      <option value="3">Nipun</option>
-                      <option value="4">Sahan</option>
-                      <option value="5">Saduni</option>
                     </select>
                   </div>
                   <div
                     class="buttons col-md-5 col-10 d-flex align-items-end justify-content-end"
                   >
-                    <!-- change the data-bs-target to the relevent id -->
                     <button
                       type="button"
                       class="btn btn-dark m-2 collapsed"
@@ -359,9 +364,16 @@
                     >
                       View Orders
                     </button>
-                    <a href="#" class="btn btn-danger m-2">Confirm</a>
+                    <button
+                      type="button"
+                      class="btn btn-danger m-2 confirmAssign"
+                      id="<%=
+                      sect[0][4] %>"
+                    >
+                      Confirm
+                    </button>
                   </div>
-                  <!-- change below id in each item -->
+
                   <div
                     id="schedule-orders-<%=i%>"
                     class="accordion-collapse collapse"
