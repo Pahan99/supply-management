@@ -59,13 +59,13 @@
     </div>
     <div class="row mt-4 px-4">
       <h6 class="lead route-id z-index-1 text-black">
-        Route : <%= record_list[0].route %>
+        Route : <%= record_list.route %>
       </h6>
     </div>
 
     <div class="row mt-4 px-5 orders">
-      <% for( let i = 1; i < record_list.length; i++ ) { %> <% order =
-      record_list[i] %>
+      <% for( let i = 1; i < order_ids.length; i++ ) { %>
+      <% order = record_list[order_ids[i]] %>  
       <div class="card my-3 bg-gray-100">
         <div class="card-body">
           <h5 class="title">Order ID# <%= order.order_id %></h5>
@@ -73,7 +73,6 @@
           <p class="card-text">Address : <%= order.address %></p>
           <p class="card-text">Order Date : <%= order.order_date %></p>
           <p class="card-text">Due Date : <%= order.due_date %></p>
-          <% console.log(order) %>
             <div>
               <table>
               <tr align="center">
@@ -82,8 +81,8 @@
                 <th>Quantity</th>
                 <th>Unit Price</th>
               </tr>
-              <% for( let j = 0; j < order.products.length; j++ ) { %>
-                <% product = order.products[j] %>
+              <% for( let j = 0; j < order.products.length; j++ ) { %> 
+                <% product = order.products[j] %> 
                 <tr align="center">
                   <td><p class="card-text"><%= product.product_id %></p></td>
                   <td><p class="card-text"><%= product.product_name %></p></td>

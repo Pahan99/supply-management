@@ -65,9 +65,9 @@ const getTruckDeliveriesByAssistant = async (driver_id) => {
   return result[0];
 };
 
-const getTruckDeliveriesByDeliveryDetail = async (delivery_id, route_id) => {
-  const sql = "SELECT  o.order_id, c.customer_name, c.address, o.order_date, o.delivery_date FROM customers c RIGHT JOIN orders AS o USING(customer_id) RIGHT JOIN truck_order_partitions AS tr USING(order_id) RIGHT JOIN delivery_details AS dd USING(truck_order_partition_id) WHERE delivery_id=? AND route_id=?";
-  const result = await db.execute(sql, [delivery_id, route_id]);
+const getTruckDeliveriesByDeliveryDetail = async (delivery_id) => {
+  const sql = "SELECT o.order_id, c.customer_name, c.address, o.order_date, o.delivery_date, p.product_id, p.product_name, od.quantity, p.unit_price FROM order_details od LEFT JOIN orders o USING(order_id) LEFT JOIN customers c USING(customer_id) LEFT JOIN products p USING(product_id) WHERE truck_order_partition_id IN (SELECT truck_order_partition_id FROM delivery_details WHERE delivery_id=?)";
+  const result = await db.execute(sql, [delivery_id]);
   return result[0];
 };
 

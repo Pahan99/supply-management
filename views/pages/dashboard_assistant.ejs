@@ -37,17 +37,17 @@
       <%  record = record_list[a] %>
     <div class="row mt-4 px-4">
       <h6 class="lead route-id z-index-1 text-black">
-        Delivery ID : <%= record[0].delivery_id %>
+        Delivery ID : <%= record[record.length-1] %>
       </h6>
     </div>
     <div class="row mt-4 px-4">
       <h6 class="lead route-id z-index-1 text-black">
-        Route : <%= record[1].route %>
+        Route : <%= record[record.length-2] %>
       </h6>
     </div>
 
     <div class="row mt-4 px-5 orders">
-      <% for( let i = 2; i < record.length; i++ ) { %> <% order =
+      <% for( let i = 0; i < record.length-2; i++ ) { %> <% order =
       record[i] %>
       <div class="card my-3 bg-gray-100">
         <div class="card-body">
