@@ -16,7 +16,7 @@ const getAllTruckOrderPartitions = async () => {
 
 const getRouteswithOrders = async (branch_id) => {
   const sql =
-    "SELECT route_id,  route_name FROM routes WHERE branch_id=? AND route_id IN (SELECT route_id FROM orders WHERE status_id=4)";
+    "SELECT route_id,  route_name FROM routes WHERE branch_id=? AND route_id IN (SELECT route_id FROM orders WHERE status_id=3)";
   const result = await db.query(sql, [branch_id]);
   return result[0];
 };
@@ -45,36 +45,47 @@ const getViewOrdersData = async (delivery_id) => {
 
 const addTruckOrderPartition = async () => {
   const sql = "";
-  const result = await db.execute(sql);
+  const result = await db.query(sql);
   return result[0];
 };
 
 const updateTruckOrderPartitions = async (order_id, delivery_id) => {
-  console.log(order_id, delivery_id);
+  // console.log(order_id, delivery_id);
   const sql =
     "UPDATE truck_order_partitions SET status_id=5 WHERE truck_order_partition_id IN (SELECT truck_order_partition_id FROM truck_order_partitions WHERE order_id=? AND truck_order_partition_id IN (SELECT truck_order_partition_id FROM delivery_details WHERE delivery_id=?))";
   const result = await db.query(sql, [order_id, delivery_id]);
-  return result[0];
+  const count = await db.query(
+    "SELECT COUNT(DISTINCT status_id) AS count FROM truck_order_partitions WHERE truck_order_partition_id IN (SELECT truck_order_partition_id FROM delivery_details WHERE delivery_id=?)",
+    [delivery_id]
+  );
+  const distinct = count[0][0].count;
+  if (distinct == 1) {
+    await db.query(
+      "UPDATE truck_deliveries SET delivery_status=TRUE WHERE delivery_id=?",
+      [delivery_id]
+    );
+  }
+  // return result[0];
 };
 
 const getTruckDeliveriesByDriver = async (driver_id) => {
   const sql =
     "SELECT delivery_id, route_id FROM truck_deliveries WHERE driver_id=? AND delivery_status=0";
-  const result = await db.execute(sql, [driver_id]);
+  const result = await db.query(sql, [driver_id]);
   return result[0];
 };
 
 const getTruckDeliveriesByAssistant = async (driver_id) => {
   const sql =
     "SELECT delivery_id, route_id FROM truck_deliveries WHERE driver_assistant_id=? AND delivery_status=0";
-  const result = await db.execute(sql, [driver_id]);
+  const result = await db.query(sql, [driver_id]);
   return result[0];
 };
 
 const getTruckDeliveriesByDeliveryDetail = async (delivery_id) => {
   const sql =
     "SELECT o.order_id, c.customer_name, c.address, o.order_date, o.delivery_date, p.product_id, p.product_name, od.quantity, p.unit_price FROM order_details od LEFT JOIN orders o USING(order_id) LEFT JOIN customers c USING(customer_id) LEFT JOIN products p USING(product_id) WHERE truck_order_partition_id IN (SELECT truck_order_partition_id FROM delivery_details WHERE delivery_id=?)";
-  const result = await db.execute(sql, [delivery_id]);
+  const result = await db.query(sql, [delivery_id]);
   return result[0];
 };
 
@@ -86,7 +97,7 @@ const getTruckDeliveriesByDeliveryDetail = async (delivery_id) => {
 
 const getRouteByRouteID = async (route_id) => {
   const sql = "SELECT route_name FROM routes WHERE route_id=?";
-  const result = await db.execute(sql, [route_id]);
+  const result = await db.query(sql, [route_id]);
   return result[0];
 };
 
@@ -101,11 +112,12 @@ const updateAssigned = async (delivery_id, driver_id, assistant_id) => {
     "UPDATE truck_deliveries SET driver_id=?,driver_assistant_id=?,assigned_at=(SELECT NOW()) WHERE delivery_id=?",
     [driver_id, assistant_id, delivery_id]
   );
-
+  await db.query("SET SQL_SAFE_UPDATES = 0");
   await db.query(
     "UPDATE truck_order_partitions SET status_id=4 WHERE truck_order_partition_id IN (SELECT truck_order_partition_id FROM delivery_details WHERE delivery_id=?)",
     [delivery_id]
   );
+  await db.query("SET SQL_SAFE_UPDATES = 1");
 };
 
 module.exports = {

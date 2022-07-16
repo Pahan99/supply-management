@@ -5,5 +5,5 @@ DO BEGIN
 	SET SQL_SAFE_UPDATES = 0;
 	UPDATE drivers SET weekly_hours = 0;
 	UPDATE driver_assistants SET weekly_hours = 0;
-	SET SQL_SAFE_UPDATES = 1;
+	
 END

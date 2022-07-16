@@ -4,7 +4,7 @@ async function confirm(id) {
   let trip = "#trip" + id;
   $(trip).hide();
   // console.log($tr);
-  // location.replace("/dashboard");
+  location.replace("/dashboard");
 }
 
 // confirm();

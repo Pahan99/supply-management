@@ -42,7 +42,7 @@ $(".confirmAssign").on("click", async function () {
       `/trucks/update-assigned/${delivery_id}/${driver}/${assistant}`
     );
     // $(`#${delivery _id}`).hide();
-    // location.reload();
-    // $("#nav-schedule").trigger("click");
+    location.reload();
+    $("#nav-schedule").trigger("click");
   }
 });
