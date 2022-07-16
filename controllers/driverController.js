@@ -7,4 +7,19 @@ const getDrivers = async (req, res) => {
   return res.json(driver_list);
 };
 
-exports.getDrivers = getDrivers;
+const updateAvailability = async (req, res) => {
+  const user_id = req.cookies.id;
+  await driverServices.updateAvailability(user_id);
+}
+
+const getAvailability = async (req, res) => {
+  const user_id = req.cookies.id;
+  const availability = await driverServices.getAvailability(user_id);
+  return res.json(availability);
+}
+
+module.exports = {
+  getDrivers,
+  updateAvailability,
+  getAvailability,
+}

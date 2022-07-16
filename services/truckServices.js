@@ -99,7 +99,7 @@ const getRouteByRouteID = async (route_id) => {
   const sql = "SELECT route_name FROM routes WHERE route_id=?";
   const result = await db.query(sql, [route_id]);
   return result[0];
-};
+}
 
 const makePartitions = async (branch_id) => {
   await make_partitions(branch_id);

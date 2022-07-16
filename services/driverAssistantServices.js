@@ -12,7 +12,15 @@ const updateAvailability = async (user_id) => {
     [user_id, user_id]
   );
 };
+const getAvailability = async (user_id) => {
+  const sql_get_availability = `SELECT availability FROM driver_assistants WHERE user_id=?`;
+  const availability = await db.query(sql_get_availability, [user_id]);
+
+  // console.log(availability[0][0].availability);
+  return availability[0][0].availability;
+}
 module.exports = {
   getAvailableDriverAssistants,
   updateAvailability,
+  getAvailability,
 };
