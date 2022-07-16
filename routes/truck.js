@@ -8,4 +8,9 @@ router.post(
   truckController.updateAssigned
 );
 
+router.post(
+  "/update-order/:delivery/:order",
+  truckController.updateDeliveryOrder
+);
+
 module.exports = router;
