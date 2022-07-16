@@ -21,11 +21,26 @@
 
     <div class="row ms-auto mt-4 px-4 justify-content-start z-index-1">
       <div class="form-check form-switch col-10">
-        <input class="form-check-input" type="checkbox" id="set-availability" />
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="set-availability"
+          onclick="toggle()"
+          checked
+        />
         <label
-          class="form-check-label font-weight-bolder"
+          id="text1"
+          style="display: none"
+          class="form-check-label font-weight-bolder z-index-0"
           for="set-availability"
           >Available</label
+        >
+        <label
+          id="text2"
+          style="display: none"
+          class="form-check-label font-weight-bolder z-index-0"
+          for="set-availability"
+          >Unavailable</label
         >
       </div>
     </div>
@@ -87,5 +102,6 @@
 
     <%- include('../components/js-scripts.ejs') %>
     <script src="../assets/js/confirm-order-assistant.js"></script>
+    <script src="../assets/js/driver_assistant_scripts.js"></script>
   </body>
 </html>

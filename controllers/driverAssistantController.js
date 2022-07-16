@@ -8,7 +8,7 @@ const getDriverAssistants = async (req, res) => {
 };
 
 const updateAvailability = async (req, res) => {
-  const user_id = req.cookies.user_id;
+  const user_id = req.cookies.id;
   await driverAssistantServices.updateAvailability(user_id);
 }
 
