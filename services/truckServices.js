@@ -88,9 +88,6 @@ const getRouteByRouteID = async (route_id) => {
 
 const makePartitions = async (branch_id) => {
   await make_partitions(branch_id);
-
-const makePartitions = async (branch_id) => {
-  await make_partitions(branch_id);
 };
 
 const updateAssigned = async (delivery_id, driver_id, assistant_id) => {
