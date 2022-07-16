@@ -26,6 +26,7 @@
           type="checkbox"
           id="set-availability"
           onclick="toggle()"
+          checked
         />
         <label
           id="text1"
@@ -42,7 +43,7 @@
           >Unavailable</label
         >
       </div>
-      <script>
+      <!-- <script>
         function toggle() {
           var checkBox = document.getElementById("set-availability");
           var text1 = document.getElementById("text1");
@@ -55,7 +56,7 @@
             text2.style.display = "block";
           }
         }
-      </script>
+      </script> -->
     </div>
     <div class="row mt-4 px-4">
       <h6 class="lead route-id z-index-1 text-black delivery">
@@ -109,5 +110,6 @@
 
     <%- include('../components/js-scripts.ejs') %>
     <script src="../assets/js/confirm-order-driver.js"></script>
+    <script src="../assets/js/driver_scripts.js"></script>
   </body>
 </html>
