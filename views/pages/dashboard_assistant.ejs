@@ -46,7 +46,7 @@
       </h6>
     </div>
 
-    <div class="row mt-4 px-5 orders">
+    <div class="row mt-4 px-5 orders delivery" id="<%= record[record.length-1] %>">
       <% for( let i = 0; i < record.length-2; i++ ) { %> <% order =
       record[i] %>
       <div class="card my-3 bg-gray-100">
@@ -76,7 +76,8 @@
               <% } %>
             </table>
             </div>
-          <a href="#" class="btn btn-outline-danger">Confirm</a>
+            <br>
+          <button class="btn btn-outline-danger confirmOrder" id="<%= order.order_id %>">Confirm</button>
         </div>
       </div>
       <% } %>
@@ -85,5 +86,6 @@
   </div>
 
     <%- include('../components/js-scripts.ejs') %>
+    <script src="../assets/js/confirm-order-assistant.js"></script>
   </body>
 </html>

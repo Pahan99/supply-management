@@ -58,46 +58,56 @@
       </script>
     </div>
     <div class="row mt-4 px-4">
-      <h6 class="lead route-id z-index-1 text-black">
-        Route : <%= record_list.route %>
+      <h6 class="lead route-id z-index-1 text-black delivery">
+        Route : <%= record_list[record_list.length-2] %>
       </h6>
     </div>
 
-    <div class="row mt-4 px-5 orders">
-      <% for( let i = 1; i < order_ids.length; i++ ) { %>
-      <% order = record_list[order_ids[i]] %>  
-      <div class="card my-3 bg-gray-100">
+    <div
+      class="row mt-4 px-5 orders"
+      id="<%= record_list[record_list.length-1] %>"
+    >
+      <% for( let i = 0; i < record_list.length-2; i++ ) { %> <% order =
+      record_list[i] %>
+      <div class="card my-3 bg-gray-100 products" id="<%= order.order_id %>">
         <div class="card-body">
           <h5 class="title">Order ID# <%= order.order_id %></h5>
           <p class="card-text">Customer Name : <%= order.customer %></p>
           <p class="card-text">Address : <%= order.address %></p>
           <p class="card-text">Order Date : <%= order.order_date %></p>
           <p class="card-text">Due Date : <%= order.due_date %></p>
-            <div>
-              <table>
+          <div>
+            <table>
               <tr align="center">
                 <th>Product ID</th>
                 <th>Product Name</th>
                 <th>Quantity</th>
                 <th>Unit Price</th>
               </tr>
-              <% for( let j = 0; j < order.products.length; j++ ) { %> 
-                <% product = order.products[j] %> 
-                <tr align="center">
-                  <td><p class="card-text"><%= product.product_id %></p></td>
-                  <td><p class="card-text"><%= product.product_name %></p></td>
-                  <td><p class="card-text"><%= product.quantity %></p></td>
-                  <td><p class="card-text"><%= product.unit_price %></p></td>
-                </tr>
+              <% for( let j = 0; j < order.products.length; j++ ) { %> <%
+              product = order.products[j] %>
+              <tr align="center">
+                <td><p class="card-text"><%= product.product_id %></p></td>
+                <td><p class="card-text"><%= product.product_name %></p></td>
+                <td><p class="card-text"><%= product.quantity %></p></td>
+                <td><p class="card-text"><%= product.unit_price %></p></td>
+              </tr>
               <% } %>
             </table>
-            </div>
-          <a href="#" class="btn btn-outline-danger">Confirm</a>
+          </div>
+          <br />
+          <button
+            class="btn btn-outline-danger confirmOrder"
+            id="<%= order.order_id %>"
+          >
+            Confirm
+          </button>
         </div>
       </div>
       <% } %>
     </div>
 
     <%- include('../components/js-scripts.ejs') %>
+    <script src="../assets/js/confirm-order-driver.js"></script>
   </body>
 </html>
