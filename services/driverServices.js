@@ -11,7 +11,7 @@ const getAvailability = async (user_id) => {
   const sql_get_availability = `SELECT availability FROM drivers WHERE user_id=?`;
   const availability = await db.query(sql_get_availability, [user_id]);
 
-  // console.log(availability[0][0].availability);
+  // console.log("availability: " + availability[0][0].availability);
   return availability[0][0].availability;
 }
 

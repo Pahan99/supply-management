@@ -13,20 +13,19 @@ function toggle() {
 
 }
 
-// $(document).ready(function(event){
-//     $.ajax({
-//         url: "/drivers/getAvailability",
-//         type: "GET",
-//     })
-//         .done(function(result){
-//             console.log(result);
+$(document).ready(function(event){
+    $.ajax({
+        url: "/drivers/getAvailability",
+        type: "GET",
+    })
+        .done(function(result){
+            checkBox.checked = result ? true : false;
             
-//         })
-//         .fail(function(err){
-//             console.log(err);
-//         });
-//     console.log(checkBox.checked);
-// });
+        })
+        .fail(function(err){
+            console.log(err);
+        });
+});
 
 $(checkBox).on('change', function(event){
     event.preventDefault();

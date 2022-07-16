@@ -4,6 +4,7 @@ const driverAssistantController = require("../controllers/driverAssistantControl
 const router = express.Router();
 
 router.get("/", driverAssistantController.getDriverAssistants);
+router.get("/getAvailability", driverAssistantController.getAvailability);
 router.post("/updateAvailability", driverAssistantController.updateAvailability);
 
 module.exports = router;
