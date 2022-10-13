@@ -1,16 +1,20 @@
 const { db } = require("../database/db-config");
 
 roles = [
-  { ID: 1, name: "Supervisor" },
-  { ID: 2, name: "Truck Driver" },
-  { ID: 3, name: "Truck Driver Assistant" },
+  { role_id: 1, role_name: "Supervisor" },
+  { role_id: 2, role_name: "Manager" },
+  { role_id: 3, role_name: "Truck Driver" },
+  { role_id: 4, role_name: "Truck Driver Assistant" },
 ];
 
 roles.forEach((role) => {
-  sql = "INSERT INTO roles VALUES (?,?)";
-  db.query(sql, [role.ID, role.name], function (err, result) {
-    if (err) throw err;
-    console.log(result);
-    return;
-  });
+  sql = "INSERT INTO roles (role_id, role_name) VALUES (?,?)";
+  db.query(sql, [role.role_id, role.role_name])
+    .then((result) => {
+      console.log(result);
+      process.exit();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });

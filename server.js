@@ -7,8 +7,8 @@ const PORT = process.env.PORT || 3001;
 
 dbConn
   .connectionCheck()
-  .then((data) => {
-    console.log(data);
+  .then(() => {
+    console.log("Database Connected");
     app.listen(PORT, () => {
       console.log(`Listening on port : ${PORT}`);
     });

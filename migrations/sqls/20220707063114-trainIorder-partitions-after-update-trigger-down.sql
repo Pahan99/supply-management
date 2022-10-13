@@ -1,0 +1,1 @@
+DROP TRIGGER IF EXISTS train_order_partitions_after_update

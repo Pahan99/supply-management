@@ -1,0 +1,1 @@
+DROP VIEW IF EXISTS `get_train_order_details`

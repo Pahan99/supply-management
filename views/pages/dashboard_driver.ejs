@@ -21,37 +21,95 @@
 
     <div class="row ms-auto mt-4 px-4 justify-content-start z-index-1">
       <div class="form-check form-switch col-10">
-        <input class="form-check-input" type="checkbox" id="set-availability" />
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="set-availability"
+          onclick="toggle()"
+          checked
+        />
         <label
-          class="form-check-label font-weight-bolder"
+          id="text1"
+          style="display: none"
+          class="form-check-label font-weight-bolder z-index-0"
           for="set-availability"
           >Available</label
         >
+        <label
+          id="text2"
+          style="display: none"
+          class="form-check-label font-weight-bolder z-index-0"
+          for="set-availability"
+          >Unavailable</label
+        >
       </div>
+      <!-- <script>
+        function toggle() {
+          var checkBox = document.getElementById("set-availability");
+          var text1 = document.getElementById("text1");
+          var text2 = document.getElementById("text2");
+          if (checkBox.checked == true) {
+            text1.style.display = "block";
+            text2.style.display = "none";
+          } else {
+            text1.style.display = "none";
+            text2.style.display = "block";
+          }
+        }
+      </script> -->
     </div>
-
     <div class="row mt-4 px-4">
-      <h6 class="lead route-id">Route ID#</h6>
+      <h6 class="lead route-id z-index-1 text-black delivery">
+        Route : <%= record_list[record_list.length-2] %>
+      </h6>
     </div>
 
-    <div class="row mt-4 px-5 orders">
-      <div class="card my-3 bg-gray-100">
+    <div
+      class="row mt-4 px-5 orders"
+      id="<%= record_list[record_list.length-1] %>"
+    >
+      <% for( let i = 0; i < record_list.length-2; i++ ) { %> <% order =
+      record_list[i] %>
+      <div class="card my-3 bg-gray-100 products" id="<%= order.order_id %>">
         <div class="card-body">
-          <h5 class="title">Order ID#</h5>
-          <p class="card-text">Address: Lorem ipsum dolor sit amet.</p>
-          <a href="#" class="btn btn-outline-danger">Confirm</a>
+          <h5 class="title">Order ID# <%= order.order_id %></h5>
+          <p class="card-text">Customer Name : <%= order.customer %></p>
+          <p class="card-text">Address : <%= order.address %></p>
+          <p class="card-text">Order Date : <%= order.order_date %></p>
+          <p class="card-text">Due Date : <%= order.due_date %></p>
+          <div>
+            <table>
+              <tr align="center">
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+              </tr>
+              <% for( let j = 0; j < order.products.length; j++ ) { %> <%
+              product = order.products[j] %>
+              <tr align="center">
+                <td><p class="card-text"><%= product.product_id %></p></td>
+                <td><p class="card-text"><%= product.product_name %></p></td>
+                <td><p class="card-text"><%= product.quantity %></p></td>
+                <td><p class="card-text"><%= product.unit_price %></p></td>
+              </tr>
+              <% } %>
+            </table>
+          </div>
+          <br />
+          <button
+            class="btn btn-outline-danger confirmOrder"
+            id="<%= order.order_id %>"
+          >
+            Confirm
+          </button>
         </div>
       </div>
-
-      <div class="card my-3 bg-gray-100">
-        <div class="card-body">
-          <h5 class="title">Order ID#</h5>
-          <p class="card-text">Address: Lorem ipsum dolor sit amet.</p>
-          <a href="#" class="btn btn-outline-danger">Confirm</a>
-        </div>
-      </div>
+      <% } %>
     </div>
 
     <%- include('../components/js-scripts.ejs') %>
+    <script src="../assets/js/confirm-order-driver.js"></script>
+    <script src="../assets/js/driver_scripts.js"></script>
   </body>
 </html>

@@ -1,0 +1,1 @@
+DROP VIEW IF EXISTS `get_tot_weight`

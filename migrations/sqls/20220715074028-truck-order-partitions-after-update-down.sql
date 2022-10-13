@@ -1,0 +1,1 @@
+DROP TRIGGER IF EXISTS truck_order_partitions_after_update
